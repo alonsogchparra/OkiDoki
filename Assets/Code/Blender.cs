@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Blender : MonoBehaviour {
 
+	public GameObject blenderShine;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -12,4 +14,13 @@ public class Blender : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	void OnMouseOver(){
+		blenderShine.SetActive(true);
+	}
+
+	void OnMouseExit(){
+		blenderShine.SetActive(false);
+	}
+		
 }
