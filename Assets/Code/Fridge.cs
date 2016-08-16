@@ -30,7 +30,15 @@ public class Fridge : MonoBehaviour {
 	}
 
 	void OnMouseOver(){
-		fridgeShine.SetActive(true);
+
+		if(spriteRender.sprite == fridgeClosed)
+			fridgeShine.SetActive(true);
+
+		if(Input.GetMouseButtonDown(0)){
+
+			ChangeSprite();
+
+		}
 	}
 
 	void OnMouseExit(){
