@@ -41,7 +41,7 @@ public class Door : MonoBehaviour {
 
 		if(Input.GetMouseButtonDown(0)){
 
-			spriteRender.sprite = doorOpened;
+			ChangeSprite();
 
 		}
 		
