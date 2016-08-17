@@ -29,9 +29,14 @@ public class Dog : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(bowl.currentState == Bowl.BowlState.Food) {
+		if(bowl.currentState == Bowl.BowlState.Food || bowl.currentState == Bowl.BowlState.Water) {
+			
 			DogMoveToBowl();
 			currentState = DogState.Walking;
+
+			if(transform.position == bowl.transform.position) {
+				currentState = DogState.Eating;
+			}
 		}
 			
 	
@@ -60,8 +65,6 @@ public class Dog : MonoBehaviour {
 		target.z = transform.position.z;
 
 		transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
-
-
 		
 	}
 }
