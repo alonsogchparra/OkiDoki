@@ -4,7 +4,7 @@ using System.Collections;
 public class Blender : MonoBehaviour {
 
 	public GameObject blenderShine;
-	public Juice juice;
+	private Juice juice;
 
 	// Use this for initialization
 	void Start () {
