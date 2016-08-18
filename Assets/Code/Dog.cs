@@ -65,6 +65,13 @@ public class Dog : MonoBehaviour {
 		target.z = transform.position.z;
 
 		transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
+
+		if(transform.position.x == target.x) {
+			spriteRender.sprite = dogEating;
+			currentState = DogState.Eating;
+		}
+
+
 		
 	}
 }
