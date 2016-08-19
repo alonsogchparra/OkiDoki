@@ -23,35 +23,10 @@ public class Floor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(player.currentState != Player.PlayerState.Sleepy && player.canMove) {
-
-			MovePlayer();
-
-		}
 	
 	}
 
 	void MovePlayer(){
-
-		player._isFacingRight = player.transform.localScale.x > 0;
-
-		if(player._isFacingRight) {
-			player.Flip();
-		}
-
-
-		if(player.transform.position != transform.position) {
-
-			player.transform.position = Vector3.MoveTowards(
-				player.transform.position, 
-				transform.position, 
-				Time.deltaTime * player.speed );
-
-		}
-
-
-
-
 
 	}
 
@@ -63,6 +38,8 @@ public class Floor : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0) && juice.lvlNumber <= 5) {
 			player.canMove = true;
 			juice.lvlNumber--;
+			player.currentPosition = transform.position;
+
 
 		}else if (Input.GetMouseButtonDown(0) && juice.lvlNumber == 0) {
 			player.canMove = false;
