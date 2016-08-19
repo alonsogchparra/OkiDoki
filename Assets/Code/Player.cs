@@ -10,10 +10,11 @@ public class Player : MonoBehaviour {
 	public bool _isFacingRight;
 	public float speed = 2.0f;
 	public bool canMove;
-
+	public Vector3 currentPosition;
 	public Juice juice;
 
 	private SpriteRenderer spriteRender;
+
 
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,8 @@ public class Player : MonoBehaviour {
 		if(spriteRender.sprite == null || currentState == PlayerState.Happy) {
 			spriteRender.sprite = okiHappy;
 		}
+
+		currentPosition = transform.position;
 	
 	}
 	
@@ -68,10 +71,28 @@ public class Player : MonoBehaviour {
 
 		}
 
-	
+		if(currentPosition != transform.position) {
+
+			MoveTowards(currentPosition);
+
+		}
+
+		if(_isFacingRight) {
+			Flip();
+		}
+			
+			
 	}
 
 	public void Flip() {
-		transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+		transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+		_isFacingRight = transform.localScale.x > 0;
+	}
+
+	public void MoveTowards(Vector3 target) {
+		transform.position = Vector3.MoveTowards(
+			transform.position, 
+			target, 
+			Time.deltaTime * speed );
 	}
 }
