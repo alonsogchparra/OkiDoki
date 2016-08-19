@@ -9,7 +9,7 @@ public class Blender : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		juice = GameObject.Find("Levels").GetComponent<Juice>();
+		juice = GameObject.Find("Juice").GetComponent<Juice>();
 	
 	}
 	
