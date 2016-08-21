@@ -12,17 +12,23 @@ public class Player : MonoBehaviour {
 	public bool canMove;
 	public Vector3 currentPosition;
 	public Juice juice;
+	public Sprite bowlEmpty, bowlFood, bowlWater;
+	public SpriteRenderer bowlSpriteRender;
 
 	private SpriteRenderer spriteRender;
-
 
 	// Use this for initialization
 	void Start () {
 
 		spriteRender = GetComponent<SpriteRenderer>();
+		bowlSpriteRender = GetComponent<SpriteRenderer>();
 
 		if(spriteRender.sprite == null || currentState == PlayerState.Happy) {
 			spriteRender.sprite = okiHappy;
+		}
+
+		if(bowlSpriteRender.sprite == null) {
+			spriteRender.sprite = bowlEmpty;
 		}
 
 		currentPosition = transform.position;
@@ -71,25 +77,25 @@ public class Player : MonoBehaviour {
 
 		}
 
-		if(currentPosition != transform.position) {
+		if(currentPosition != transform.position && juice.lvlNumber >= 0) {
 
 			MoveTowards(currentPosition);
 
 		}
-
-		if(_isFacingRight) {
-			Flip();
-		}
-			
-			
 	}
 
 	public void Flip() {
 		transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-		_isFacingRight = transform.localScale.x > 0;
 	}
 
 	public void MoveTowards(Vector3 target) {
+
+		_isFacingRight = transform.localScale.x < 0;
+
+		if(_isFacingRight) {
+			Flip();
+		}
+
 		transform.position = Vector3.MoveTowards(
 			transform.position, 
 			target, 
