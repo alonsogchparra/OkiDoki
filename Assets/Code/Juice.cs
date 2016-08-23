@@ -6,9 +6,13 @@ public class Juice : MonoBehaviour {
 	public GameObject lvlOne, lvlTwo, lvlThree, lvlFour, lvlFive;
 	public int lvlNumber = 5;
 
+	private Player player;
+
 	// Use this for initialization
 	void Start () {
 	
+		player = GameObject.Find("Oki").GetComponent<Player>();
+
 	}
 	
 	// Update is called once per frame
@@ -65,7 +69,8 @@ public class Juice : MonoBehaviour {
 			break;
 
 			default:
-			print("Nothing to do HERE!");
+//			print("Nothing to do HERE!");
+			lvlNumber = 0;
 			break;
 
 		}
