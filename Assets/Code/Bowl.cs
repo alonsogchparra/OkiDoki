@@ -54,6 +54,18 @@ public class Bowl : MonoBehaviour {
 				bowlShine.SetActive(true);
 				break;
 
+			case BowlState.SignFood:
+				bowlShine.SetActive(true);
+				spriteRender.sprite = bowlFood;
+				spriteRender.color = alphaHalfColor;
+				break;
+
+			case BowlState.SignWater:
+				bowlShine.SetActive(true);
+				spriteRender.sprite = bowlWater;
+				spriteRender.color = alphaHalfColor;
+				break;
+
 			default:
 				break;
 		}
@@ -74,6 +86,19 @@ public class Bowl : MonoBehaviour {
 			spriteRender.color = alphaFullColor;
 			currentState = BowlState.Empty;
 			playerBowl.SetActive(false);
+
+		} else if (Input.GetMouseButtonDown(0) && currentState == BowlState.SignFood) {
+
+			spriteRender.color = alphaFullColor;
+			currentState = BowlState.Food;
+			playerBowl.SetActive(false);
+
+		} else if(Input.GetMouseButtonDown(0) && currentState == BowlState.SignWater){
+
+			spriteRender.color = alphaFullColor;
+			currentState = BowlState.Water;
+			playerBowl.SetActive(false);
+
 		}
 
 	}
