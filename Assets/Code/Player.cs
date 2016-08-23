@@ -16,12 +16,15 @@ public class Player : MonoBehaviour {
 	public SpriteRenderer bowlSpriteRender;
 
 	private SpriteRenderer spriteRender;
+	private DogFood dogFood;
+	private Bowl bowl;
 
 	// Use this for initialization
 	void Start () {
 
 		spriteRender = GetComponent<SpriteRenderer>();
-		bowlSpriteRender = GetComponent<SpriteRenderer>();
+		dogFood = GameObject.Find("Dog Food").GetComponent<DogFood>();
+		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
 
 		if(spriteRender.sprite == null || currentState == PlayerState.Happy) {
 			spriteRender.sprite = okiHappy;
@@ -77,11 +80,16 @@ public class Player : MonoBehaviour {
 
 		}
 
-		if(currentPosition != transform.position && juice.lvlNumber >= 0) {
+		if(currentPosition != transform.position && canMove) {
 
 			MoveTowards(currentPosition);
 
+		} else if (!canMove) {
+			return;
 		}
+
+		if(juice.lvlNumber < 0)
+			juice.lvlNumber = 0;
 	}
 
 	public void Flip() {
@@ -101,4 +109,14 @@ public class Player : MonoBehaviour {
 			target, 
 			Time.deltaTime * speed );
 	}
+
+
+	public void ChangeBowlSprite(){
+		if(bowlSpriteRender.sprite == bowlEmpty && dogFood.canFeedDog) {
+			bowlSpriteRender.sprite = bowlFood;
+			bowl.currentState = Bowl.BowlState.SignFood;
+
+		}
+	}
+
 }
