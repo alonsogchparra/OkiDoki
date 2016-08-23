@@ -29,19 +29,9 @@ public class DogFood : MonoBehaviour {
 	void OnMouseOver(){
 		dogFoodShine.SetActive(true);
 
-		//TODO: ARREGLAR EL SPRITE BOWL DEL PLAYER PARA QUE CAMBIE
-
-//		if(Input.GetMouseButtonDown(0) && canFeedDog 
-//			&& bowlPlayer.activeSelf && player.bowlSpriteRender.sprite == player.bowlEmpty) {
-//
-//			player.bowlSpriteRender.sprite = player.bowlFood;
-//		}
-
 		if(Input.GetMouseButtonDown(0) && canFeedDog){
-			player.bowlSpriteRender.sprite = player.bowlFood;
+			player.ChangeBowlSprite();
 		}
-
-//		print(canFeedDog);
 
 	}
 
