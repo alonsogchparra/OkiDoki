@@ -6,12 +6,12 @@ public class Juice : MonoBehaviour {
 	public GameObject lvlOne, lvlTwo, lvlThree, lvlFour, lvlFive;
 	public int lvlNumber = 5;
 
-	private Player player;
+//	private Player player;
 
 	// Use this for initialization
 	void Start () {
 	
-		player = GameObject.Find("Oki").GetComponent<Player>();
+//		player = GameObject.Find("Oki").GetComponent<Player>();
 
 	}
 	
