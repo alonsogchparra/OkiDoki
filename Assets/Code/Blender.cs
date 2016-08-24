@@ -4,13 +4,15 @@ using System.Collections;
 public class Blender : MonoBehaviour {
 
 	public GameObject blenderShine;
+
 	private Juice juice;
+	private Player player;
 
 	// Use this for initialization
 	void Start () {
 
 		juice = GameObject.Find("Juice").GetComponent<Juice>();
-	
+		player = GameObject.Find("Oki").GetComponent<Player>();
 	}
 	
 	// Update is called once per frame
@@ -24,6 +26,8 @@ public class Blender : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0) && juice.lvlNumber < 5) {
 
 			juice.lvlNumber = 5;
+
+			player.currentPosition = player.transform.position;
 
 		}
 
