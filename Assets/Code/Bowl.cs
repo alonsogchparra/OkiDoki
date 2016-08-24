@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Bowl : MonoBehaviour {
 
-	public enum BowlState {Empty, Food, Water, SignWater, SignFood, SignEmpty }
+	public enum BowlState { Empty, Food, Water, SignWater, SignFood, SignEmpty }
 
 	public BowlState currentState = BowlState.Empty;
 	public GameObject bowlShine;
