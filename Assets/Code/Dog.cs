@@ -13,6 +13,7 @@ public class Dog : MonoBehaviour {
 	public float speed = 2.0f;
 
 	private Bowl bowl;
+	private Balloon balloon;
 	private SpriteRenderer spriteRender;
 
 	// Use this for initialization
@@ -20,6 +21,7 @@ public class Dog : MonoBehaviour {
 		
 		spriteRender = GetComponent<SpriteRenderer>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
+		balloon = GameObject.Find("Balloon").GetComponent<Balloon>();
 
 		if(spriteRender == null || currentState == DogState.HasKeys)
 			spriteRender.sprite = dogHasKeys;
@@ -37,7 +39,11 @@ public class Dog : MonoBehaviour {
 			if(transform.position == bowl.transform.position) {
 				currentState = DogState.Eating;
 			}
-		}
+		} else if(balloon.currentState == Balloon.BallonState.Wanted) {
+			
+			DogMoveToBalloon();
+			currentState = DogState.FindingBallon;
+		} 
 			
 	
 	}
@@ -72,8 +78,28 @@ public class Dog : MonoBehaviour {
 			currentState = DogState.Eating;
 
 		}
+	}
 
+	void DogMoveToBalloon() {
 
-		
+		_isFacingRight = transform.localScale.x > 0;
+
+		if(_isFacingRight) {
+			Flip();
+		}
+
+		if(currentState == DogState.FindingBallon) {
+			spriteRender.sprite = dogFindingBallon;
+		}
+
+		var target = balloon.transform.position;
+
+		transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
+
+		if(transform.position == target) {
+			spriteRender.sprite = dogHasBalloon;
+			currentState = DogState.HasBalloon;
+			balloon.gameObject.SetActive(false);
+		}
 	}
 }
