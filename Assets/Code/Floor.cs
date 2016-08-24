@@ -23,9 +23,12 @@ public class Floor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(juice.lvlNumber <= 5 && juice.lvlNumber > 0) {
+		if(juice.lvlNumber <= 5 && player.currentState != Player.PlayerState.Sleepy) {
+			if(juice.lvlNumber < 1){
+				player.canMove = true;
+			}
 			player.canMove = true;
-		} else if (player.currentState == Player.PlayerState.Sleepy) {
+		} else if ( juice.lvlNumber <= 0 || player.currentState == Player.PlayerState.Sleepy) {
 			player.canMove = false;
 		}
 
@@ -41,16 +44,16 @@ public class Floor : MonoBehaviour {
 	void OnMouseOver(){
 		this.GetComponent<SpriteRenderer>().color = hoverColor;
 
-		if(Input.GetMouseButtonDown(0) && player.canMove) {
+		if(Input.GetMouseButtonDown(0) && player.canMove && player.currentState != Player.PlayerState.Sleepy) {
 			juice.lvlNumber--;
 			player.currentPosition = transform.position;
 
 
-		}else if (Input.GetMouseButtonDown(0) && !player.canMove) {
+		}else if (Input.GetMouseButtonDown(0) && !player.canMove && player.currentState == Player.PlayerState.Sleepy) {
 			return;
 		}
 
-		print(player.canMove);
+//		print(player.canMove);
 
 	}
 
