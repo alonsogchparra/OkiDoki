@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 	public Juice juice;
 	public Sprite bowlEmpty, bowlFood, bowlWater;
 	public SpriteRenderer bowlSpriteRender;
+	public GameObject playerBalloon;
 
 	private SpriteRenderer spriteRender;
 	private DogFood dogFood;
@@ -98,7 +99,7 @@ public class Player : MonoBehaviour {
 
 	public void MoveTowards(Vector3 target) {
 
-		_isFacingRight = transform.localScale.x < 0;
+		_isFacingRight = transform.localScale.x > 0;
 
 		if(_isFacingRight) {
 			Flip();
