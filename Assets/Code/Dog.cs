@@ -15,6 +15,9 @@ public class Dog : MonoBehaviour {
 	private Bowl bowl;
 	private Balloon balloon;
 	private SpriteRenderer spriteRender;
+//	private Player player;
+//	private Floor floor;
+	private Keys keys;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +25,8 @@ public class Dog : MonoBehaviour {
 		spriteRender = GetComponent<SpriteRenderer>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
 		balloon = GameObject.Find("Balloon Floor Seven").GetComponent<Balloon>();
+//		player = GameObject.Find("Oki").GetComponent<Player>();
+//		floor = GameObject.Find("Floor 1").GetComponent<Floor>();
 
 		if(spriteRender == null || currentState == DogState.HasKeys)
 			spriteRender.sprite = dogHasKeys;
@@ -36,9 +41,10 @@ public class Dog : MonoBehaviour {
 			DogMoveToBowl();
 			currentState = DogState.Walking;
 
-			if(transform.position == bowl.transform.position) {
+			if(transform.position.x == bowl.transform.position.x) {
 				currentState = DogState.Eating;
 			}
+
 		} else if(balloon.currentState == Balloon.BallonState.Wanted 
 			&& balloon.balloonFloorSeven.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
 			
@@ -57,8 +63,9 @@ public class Dog : MonoBehaviour {
 			DogMoveToBalloon(balloon.balloonFloorTwo.transform.position);
 			currentState = DogState.FindingBallon;
 		}
-			
-	
+
+
+
 	}
 
 
@@ -88,7 +95,6 @@ public class Dog : MonoBehaviour {
 		if(transform.position.x == target.x) {
 			
 			spriteRender.sprite = dogEating;
-			currentState = DogState.Eating;
 
 		}
 	}
