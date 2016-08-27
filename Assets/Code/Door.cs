@@ -54,8 +54,5 @@ public class Door : MonoBehaviour {
 			ChangeSprite();
 
 		}
-
-		print(canOpenIt);
-		
 	}
 }
