@@ -24,7 +24,7 @@ public class Door : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(player.transform.position.x == -6.09f) {
+		if(player.transform.position.x == -6.09f && player.playerKeys.activeSelf) {
 			canOpenIt = true;
 		} else {
 			canOpenIt = false;
