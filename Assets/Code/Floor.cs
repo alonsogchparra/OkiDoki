@@ -6,8 +6,11 @@ public class Floor : MonoBehaviour {
 
 	public Juice juice;
 
+	public GameObject[] floors;
+
 	private Color hoverColor, normalColor;
 	private Player player;
+	private Dog dog;
 
 
 	// Use this for initialization
@@ -17,6 +20,7 @@ public class Floor : MonoBehaviour {
 		normalColor = new Color32(255, 255, 255, 255);
 
 		player = GameObject.Find("Oki").GetComponent<Player>();
+		dog = GameObject.Find("Doki").GetComponent<Dog>();
 
 	}
 	
@@ -33,6 +37,47 @@ public class Floor : MonoBehaviour {
 			player.canMove = false;
 		}
 
+		if(dog.currentState == Dog.DogState.Walking || dog.currentState == Dog.DogState.FindingBallon) {
+
+			player.currentPosition = player.transform.position;
+
+			foreach(GameObject floor in floors) {
+				floor.GetComponent<PolygonCollider2D>().enabled = false;
+			}
+		}
+
+//		if(transform.position == balloon.balloonFloorSeven.transform.position) {
+//
+//			foreach(GameObject ground in floor.floors) {
+//				ground.GetComponent<PolygonCollider2D>().enabled = true;
+//			}
+//
+//		} else if(transform.position == balloon.balloonFloorFive.transform.position) {
+//
+//			foreach(GameObject ground in floor.floors) {
+//				ground.GetComponent<PolygonCollider2D>().enabled = true;
+//			}
+//
+//		} else if(transform.position == balloon.balloonFloorTwo.transform.position) {
+//
+//			foreach(GameObject ground in floor.floors) {
+//				ground.GetComponent<PolygonCollider2D>().enabled = true;
+//			}
+//
+//		} else if(transform.position == bowl.transform.position) {
+//
+//			foreach(GameObject ground in floor.floors) {
+//				ground.GetComponent<PolygonCollider2D>().enabled = true;
+//			}
+//
+//		}
+
+		if(dog.currentState == Dog.DogState.Eating) {
+			foreach(GameObject floor in floors) {
+				floor.GetComponent<PolygonCollider2D>().enabled = true;
+			}
+		}
+
 	
 	}
 
@@ -47,11 +92,15 @@ public class Floor : MonoBehaviour {
 
 		if(Input.GetMouseButtonDown(0) && player.canMove && player.currentState != Player.PlayerState.Sleepy) {
 			juice.lvlNumber--;
+
+			player.actions++;
 			player.currentPosition = transform.position;
 
 
 		} else if (Input.GetMouseButtonDown(0) && !player.canMove && player.currentState == Player.PlayerState.Sleepy) {
-			return;
+//			return;
+			player.currentPosition = player.transform.position;
+
 		}
 
 //		print(player.canMove);
