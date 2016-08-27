@@ -18,10 +18,10 @@ public class Dog : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
 		spriteRender = GetComponent<SpriteRenderer>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
-		balloon = GameObject.Find("Balloon").GetComponent<Balloon>();
+		balloon = GameObject.Find("Balloon Floor Seven").GetComponent<Balloon>();
 
 		if(spriteRender == null || currentState == DogState.HasKeys)
 			spriteRender.sprite = dogHasKeys;
@@ -39,11 +39,24 @@ public class Dog : MonoBehaviour {
 			if(transform.position == bowl.transform.position) {
 				currentState = DogState.Eating;
 			}
-		} else if(balloon.currentState == Balloon.BallonState.Wanted) {
+		} else if(balloon.currentState == Balloon.BallonState.Wanted 
+			&& balloon.balloonFloorSeven.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
 			
-			DogMoveToBalloon();
+			DogMoveToBalloon(balloon.balloonFloorSeven.transform.position);
 			currentState = DogState.FindingBallon;
-		} 
+
+		} else if(balloon.balloonFloorFive.GetComponent<Balloon>().currentState == Balloon.BallonState.Wanted 
+			&& balloon.balloonFloorFive.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
+
+			DogMoveToBalloon(balloon.balloonFloorFive.transform.position);
+			currentState = DogState.FindingBallon;
+
+		} else if (balloon.balloonFloorTwo.GetComponent<Balloon>().currentState == Balloon.BallonState.Wanted 
+			&& balloon.balloonFloorTwo.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
+
+			DogMoveToBalloon(balloon.balloonFloorTwo.transform.position);
+			currentState = DogState.FindingBallon;
+		}
 			
 	
 	}
@@ -80,7 +93,7 @@ public class Dog : MonoBehaviour {
 		}
 	}
 
-	void DogMoveToBalloon() {
+	void DogMoveToBalloon(Vector3 target) {
 
 		_isFacingRight = transform.localScale.x > 0;
 
@@ -91,15 +104,13 @@ public class Dog : MonoBehaviour {
 		if(currentState == DogState.FindingBallon) {
 			spriteRender.sprite = dogFindingBallon;
 		}
-
-		var target = balloon.transform.position;
+			
 
 		transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
 
 		if(transform.position == target) {
 			spriteRender.sprite = dogHasBalloon;
 			currentState = DogState.HasBalloon;
-			balloon.gameObject.SetActive(false);
 		}
 	}
 }
