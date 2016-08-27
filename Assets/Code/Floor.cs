@@ -28,7 +28,8 @@ public class Floor : MonoBehaviour {
 				player.canMove = true;
 			}
 			player.canMove = true;
-		} else if ( juice.lvlNumber <= 0 || player.currentState == Player.PlayerState.Sleepy) {
+		} else if ( juice.lvlNumber <= 0 
+			|| player.currentState == Player.PlayerState.Sleepy || player.playerBalloon.activeSelf) {
 			player.canMove = false;
 		}
 
@@ -49,7 +50,7 @@ public class Floor : MonoBehaviour {
 			player.currentPosition = transform.position;
 
 
-		}else if (Input.GetMouseButtonDown(0) && !player.canMove && player.currentState == Player.PlayerState.Sleepy) {
+		} else if (Input.GetMouseButtonDown(0) && !player.canMove && player.currentState == Player.PlayerState.Sleepy) {
 			return;
 		}
 
