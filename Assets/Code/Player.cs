@@ -14,11 +14,14 @@ public class Player : MonoBehaviour {
 	public Juice juice;
 	public Sprite bowlEmpty, bowlFood, bowlWater;
 	public SpriteRenderer bowlSpriteRender;
-	public GameObject playerBalloon;
+	public GameObject playerBalloon, playerKeys;
+	public int actions = 0;
 
 	private SpriteRenderer spriteRender;
 	private DogFood dogFood;
 	private Bowl bowl;
+	private Dog dog;
+	private Floor floor;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +29,7 @@ public class Player : MonoBehaviour {
 		spriteRender = GetComponent<SpriteRenderer>();
 		dogFood = GameObject.Find("Dog Food").GetComponent<DogFood>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
+		dog = GameObject.Find("Doki").GetComponent<Dog>();
 
 		if(spriteRender.sprite == null || currentState == PlayerState.Happy) {
 			spriteRender.sprite = okiHappy;
@@ -91,6 +95,14 @@ public class Player : MonoBehaviour {
 
 		if(juice.lvlNumber < 0)
 			juice.lvlNumber = 0;
+
+
+		if(dog.currentState == Dog.DogState.Walking && Input.GetMouseButtonDown(0)) {
+			
+		} else if (dog.currentState != Dog.DogState.Walking) {
+//			Cursor.lockState = CursorLockMode.Confined;
+		}
+
 	}
 
 	public void Flip() {
