@@ -12,6 +12,8 @@ public class Dog : MonoBehaviour {
 	public bool _isFacingRight;
 	public float speed = 2.0f;
 
+	public int dogCount = 0;
+
 	private Bowl bowl;
 	private Balloon balloon;
 	private SpriteRenderer spriteRender;
@@ -27,6 +29,9 @@ public class Dog : MonoBehaviour {
 		balloon = GameObject.Find("Balloon Floor Seven").GetComponent<Balloon>();
 //		player = GameObject.Find("Oki").GetComponent<Player>();
 //		floor = GameObject.Find("Floor 1").GetComponent<Floor>();
+		keys = GameObject.Find("Keys").GetComponent<Keys>();
+
+		_isFacingRight = transform.localScale.x > 0;
 
 		if(spriteRender == null || currentState == DogState.HasKeys)
 			spriteRender.sprite = dogHasKeys;
@@ -36,15 +41,20 @@ public class Dog : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(bowl.currentState == Bowl.BowlState.Food || bowl.currentState == Bowl.BowlState.Water) {
-			
+		//TODO: CUANDO EL PERRO TENGA LA PELOTA Y EL CONTADOR LLEGA A 2 REGRESAR A LAS LLAVES
+
+		if(dogCount == 2) {
+			balloon.currentState = Balloon.BallonState.Normal;
+		} else if(dogCount == 3) {
+			bowl.currentState = Bowl.BowlState.Empty;
+		}
+
+
+		if(bowl.currentState == Bowl.BowlState.Food) {
 			DogMoveToBowl();
-			currentState = DogState.Walking;
-
-			if(transform.position.x == bowl.transform.position.x) {
-				currentState = DogState.Eating;
-			}
-
+		} else if (bowl.currentState == Bowl.BowlState.Empty && dogCount == 3) {
+			DogMoveToKeys();
+		
 		} else if(balloon.currentState == Balloon.BallonState.Wanted 
 			&& balloon.balloonFloorSeven.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
 			
@@ -62,10 +72,8 @@ public class Dog : MonoBehaviour {
 
 			DogMoveToBalloon(balloon.balloonFloorTwo.transform.position);
 			currentState = DogState.FindingBallon;
+
 		}
-
-
-
 	}
 
 
@@ -75,12 +83,6 @@ public class Dog : MonoBehaviour {
 
 
 	void DogMoveToBowl() {
-
-		_isFacingRight = transform.localScale.x > 0;
-
-		if(_isFacingRight) {
-			Flip();
-		}
 
 		if(currentState == DogState.Walking) {
 			spriteRender.sprite = dogWalking;	
@@ -95,7 +97,11 @@ public class Dog : MonoBehaviour {
 		if(transform.position.x == target.x) {
 			
 			spriteRender.sprite = dogEating;
+			currentState = DogState.Eating;
 
+		} else if (transform.position.x != target.x) {
+			spriteRender.sprite = dogWalking;
+			transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 	}
 
@@ -119,4 +125,46 @@ public class Dog : MonoBehaviour {
 			currentState = DogState.HasBalloon;
 		}
 	}
+
+	void BalloonToKeys(Vector3 start) {
+
+		if(currentState == DogState.FindingBallon) {
+			spriteRender.sprite = dogFindingBallon;
+		}
+
+		transform.position = Vector3.MoveTowards(start, transform.position, Time.deltaTime * speed);
+
+		if(transform.position == keys.transform.position) {
+			spriteRender.sprite = dogHasKeys;
+			currentState = DogState.HasKeys;
+		}
+
+	}
+
+	void DogMoveToKeys() {
+
+		if(currentState == DogState.Walking) {
+			spriteRender.sprite = dogWalking;
+		}
+
+		var target = keys.transform.position;
+		target.y = transform.position.y;
+		target.z = transform.position.z;
+
+		transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
+
+		if(transform.position.x == target.x && keys.spriteRender.color == keys.alphaFullColor) {
+
+			spriteRender.sprite = dogHasKeys;
+			currentState = DogState.HasKeys;
+			dogCount = 0;
+
+		} else if (transform.position.x != target.x) {
+
+			spriteRender.sprite = dogWalking;
+			transform.localScale = new Vector3(-1f, 1f, 1f);
+		}
+
+	}
+
 }
