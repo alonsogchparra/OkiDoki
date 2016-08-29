@@ -7,8 +7,12 @@ public class Keys : MonoBehaviour {
 	public Sprite sprite;
 	public bool canTakeIt;
 
-	private SpriteRenderer spriteRender;
-	private Color alphaFullColor, alphaZeroColor;
+	[HideInInspector]
+	public Color alphaFullColor, alphaZeroColor;
+
+	[HideInInspector]
+	public SpriteRenderer spriteRender;
+
 	private Dog dog;
 	private Player player;
 	// Use this for initialization
