@@ -57,22 +57,28 @@ public class Dog : MonoBehaviour {
 		
 		} else if(balloon.currentState == Balloon.BallonState.Wanted 
 			&& balloon.balloonFloorSeven.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
-			
-			DogMoveToBalloon(balloon.balloonFloorSeven.transform.position);
+
 			currentState = DogState.FindingBallon;
+			DogMoveToBalloon(balloon.balloonFloorSeven.transform.position);
+
 
 		} else if(balloon.balloonFloorFive.GetComponent<Balloon>().currentState == Balloon.BallonState.Wanted 
 			&& balloon.balloonFloorFive.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
 
-			DogMoveToBalloon(balloon.balloonFloorFive.transform.position);
 			currentState = DogState.FindingBallon;
+			DogMoveToBalloon(balloon.balloonFloorFive.transform.position);
 
 		} else if (balloon.balloonFloorTwo.GetComponent<Balloon>().currentState == Balloon.BallonState.Wanted 
 			&& balloon.balloonFloorTwo.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
 
-			DogMoveToBalloon(balloon.balloonFloorTwo.transform.position);
 			currentState = DogState.FindingBallon;
+			DogMoveToBalloon(balloon.balloonFloorTwo.transform.position);
 
+		}
+
+		if(dogCount == 2 && currentState == DogState.HasBalloon) {
+			print("Voy a buscar las llaves");
+			BalloonToKeys(keys.transform.position);
 		}
 	}
 
@@ -120,7 +126,7 @@ public class Dog : MonoBehaviour {
 
 		transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
 
-		if(transform.position == target) {
+		if(transform.position.x == target.x) {
 			spriteRender.sprite = dogHasBalloon;
 			currentState = DogState.HasBalloon;
 		}
@@ -128,11 +134,11 @@ public class Dog : MonoBehaviour {
 
 	void BalloonToKeys(Vector3 start) {
 
-		if(currentState == DogState.FindingBallon) {
+		if(currentState == DogState.HasBalloon) {
 			spriteRender.sprite = dogFindingBallon;
 		}
 
-		transform.position = Vector3.MoveTowards(start, transform.position, Time.deltaTime * speed);
+		transform.position = Vector3.MoveTowards(transform.position, start, Time.deltaTime * speed);
 
 		if(transform.position == keys.transform.position) {
 			spriteRender.sprite = dogHasKeys;
