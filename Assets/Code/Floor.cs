@@ -72,7 +72,7 @@ public class Floor : MonoBehaviour {
 //
 //		}
 
-		if(dog.currentState == Dog.DogState.Eating) {
+		if(dog.currentState == Dog.DogState.Eating || dog.currentState == Dog.DogState.HasBalloon) {
 			foreach(GameObject floor in floors) {
 				floor.GetComponent<PolygonCollider2D>().enabled = true;
 			}
@@ -96,7 +96,7 @@ public class Floor : MonoBehaviour {
 			player.actions++;
 			player.currentPosition = transform.position;
 
-			if(dog.currentState == Dog.DogState.Eating) {
+			if(dog.currentState == Dog.DogState.Eating || dog.currentState == Dog.DogState.HasBalloon) {
 				dog.dogCount++;
 			}
 
