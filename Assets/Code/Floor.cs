@@ -96,6 +96,10 @@ public class Floor : MonoBehaviour {
 			player.actions++;
 			player.currentPosition = transform.position;
 
+			if(dog.currentState == Dog.DogState.Eating) {
+				dog.dogCount++;
+			}
+
 
 		} else if (Input.GetMouseButtonDown(0) && !player.canMove && player.currentState == Player.PlayerState.Sleepy) {
 //			return;
