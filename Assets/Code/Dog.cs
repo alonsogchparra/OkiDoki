@@ -41,10 +41,14 @@ public class Dog : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//TODO: CUANDO EL PERRO TENGA LA PELOTA Y EL CONTADOR LLEGA A 2 REGRESAR A LAS LLAVES
+		//TODO: 
 
 		if(dogCount == 2) {
+			
 			balloon.currentState = Balloon.BallonState.Normal;
+			balloon.balloonFloorFive.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
+			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
+
 		} else if(dogCount == 3) {
 			bowl.currentState = Bowl.BowlState.Empty;
 		}
@@ -106,8 +110,10 @@ public class Dog : MonoBehaviour {
 			currentState = DogState.Eating;
 
 		} else if (transform.position.x != target.x) {
+			
 			spriteRender.sprite = dogWalking;
 			transform.localScale = new Vector3(1f, 1f, 1f);
+			currentState = DogState.Walking;
 		}
 	}
 
@@ -127,8 +133,13 @@ public class Dog : MonoBehaviour {
 		transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
 
 		if(transform.position.x == target.x) {
+			
 			spriteRender.sprite = dogHasBalloon;
 			currentState = DogState.HasBalloon;
+
+		} else if(transform.position.x != target.x) {
+			
+			currentState = DogState.Walking;
 		}
 	}
 
@@ -141,8 +152,14 @@ public class Dog : MonoBehaviour {
 		transform.position = Vector3.MoveTowards(transform.position, start, Time.deltaTime * speed);
 
 		if(transform.position == keys.transform.position) {
+			
 			spriteRender.sprite = dogHasKeys;
 			currentState = DogState.HasKeys;
+			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
+
+		} else if (transform.position != keys.transform.position) {
+			
+			currentState = DogState.Walking;
 		}
 
 	}
@@ -169,6 +186,7 @@ public class Dog : MonoBehaviour {
 
 			spriteRender.sprite = dogWalking;
 			transform.localScale = new Vector3(-1f, 1f, 1f);
+			currentState = DogState.Walking;
 		}
 
 	}
