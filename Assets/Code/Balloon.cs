@@ -93,7 +93,7 @@ public class Balloon : MonoBehaviour {
 		if(dog.transform.position == balloonFloorSeven.transform.position) {
 			
 			shineFloorSeven.SetActive(false);
-			balloonFloorFive.GetComponent<SpriteRenderer>().color = alphaZeroColor;
+			balloonFloorSeven.GetComponent<SpriteRenderer>().color = alphaZeroColor;
 
 		} else if(dog.transform.position == balloonFloorFive.transform.position) {
 			
