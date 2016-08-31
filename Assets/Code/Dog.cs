@@ -41,7 +41,7 @@ public class Dog : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//TODO: 
+		//TODO: AVERIGUAR PORQUE NO SE MUEVE EL PERRO A LAS LLAVES, VER DONDE SE ACTIVA EL SHINE, DEPENDE DONDE EL PERRO DEJE EL BALON, QUEDA ACTIVO PARA VOLVERLO AGARRAR
 
 		if(dogCount == 2) {
 			
@@ -151,6 +151,14 @@ public class Dog : MonoBehaviour {
 
 		transform.position = Vector3.MoveTowards(transform.position, start, Time.deltaTime * speed);
 
+
+		if(balloon.gameObject.tag == "BalloonSeven" || balloon.gameObject.tag == "BallooFive"){
+			transform.localScale = new Vector3(-1f,1f,1f);
+		}else if(balloon.tag == "BalloonTwo"){
+			transform.localScale = new Vector3(1f,1f,1f);
+		}
+
+
 		if(transform.position == keys.transform.position) {
 			
 			spriteRender.sprite = dogHasKeys;
@@ -159,7 +167,7 @@ public class Dog : MonoBehaviour {
 
 		} else if (transform.position != keys.transform.position) {
 			
-			currentState = DogState.Walking;
+//			currentState = DogState.Walking;
 		}
 
 	}
