@@ -52,20 +52,31 @@ public class Balloon : MonoBehaviour {
 
 	void Update () {
 
-		if(player.transform.position.x == 7.14f 
-			|| player.transform.position.x == 0.36f 
-			|| player.transform.position.x == -4.47f) {
+//		if(player.transform.position.x == 7.14f 
+//			|| player.transform.position.x == 0.36f 
+//			|| player.transform.position.x == -4.47f) {
+//
+//			canTakeIt = true;
+//		} else {
+//			canTakeIt = false;
+//		}
 
+
+		if(player.transform.position.x == 7.14f  && gameObject.tag == "BalloonSeven") {
+			canTakeIt = true;
+		}else if(player.transform.position.x == 0.36f && gameObject.tag == "BalloonFive") {
+			canTakeIt = true;
+		} else if (player.transform.position.x == -4.47f && gameObject.tag =="BalloonTwo"){
 			canTakeIt = true;
 		} else {
 			canTakeIt = false;
 		}
 
-		if(player.transform.position.x == -4.47f) {
+		if(player.transform.position.x == -4.47f && gameObject.tag =="BalloonTwo") {
 			mouseOverType = MouseOverType.FloorTwo;
-		} else if (player.transform.transform.position.x == 0.36f) {
+		} else if (player.transform.transform.position.x == 0.36f && gameObject.tag == "BalloonFive") {
 			mouseOverType = MouseOverType.FloorFive;
-		} else if (player.transform.position.x == 7.14f) {
+		} else if (player.transform.position.x == 7.14f && gameObject.tag == "BalloonSeven") {
 			mouseOverType = MouseOverType.FloorSeven;
 		}
 
