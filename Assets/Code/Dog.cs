@@ -140,6 +140,7 @@ public class Dog : MonoBehaviour {
 		} else if(transform.position.x != target.x) {
 			
 			currentState = DogState.Walking;
+			spriteRender.sortingOrder = 50;
 		}
 	}
 
@@ -174,6 +175,7 @@ public class Dog : MonoBehaviour {
 		} else if (transform.position != keys.transform.position) {
 			
 //			currentState = DogState.Walking;
+			spriteRender.sortingOrder = 30;
 		}
 
 	}
