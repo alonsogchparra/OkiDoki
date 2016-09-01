@@ -149,6 +149,11 @@ public class Dog : MonoBehaviour {
 			spriteRender.sprite = dogFindingBallon;
 		}
 
+		if(transform.position.x == balloon.balloonFloorTwo.transform.position.x) {
+			balloon.balloonFloorTwo.GetComponent<SpriteRenderer>().color = balloon.alphaFullColor;
+
+		}
+
 		transform.position = Vector3.MoveTowards(transform.position, start, Time.deltaTime * speed);
 
 
@@ -163,7 +168,8 @@ public class Dog : MonoBehaviour {
 			
 			spriteRender.sprite = dogHasKeys;
 			currentState = DogState.HasKeys;
-			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
+//			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
+			dogCount = 0;
 
 		} else if (transform.position != keys.transform.position) {
 			
