@@ -62,21 +62,25 @@ public class Balloon : MonoBehaviour {
 //		}
 
 
-		if(player.transform.position.x == 7.14f  && gameObject.tag == "BalloonSeven") {
+		if(player.transform.position.x == 7.14f 
+			&& balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor) {
 			canTakeIt = true;
-		}else if(player.transform.position.x == 0.36f && gameObject.tag == "BalloonFive") {
+		}else if(player.transform.position.x == 0.36f 
+			&& balloonFloorFive.GetComponent<SpriteRenderer>().color == alphaFullColor) {
 			canTakeIt = true;
-		} else if (player.transform.position.x == -4.47f && gameObject.tag =="BalloonTwo"){
+		} else if (player.transform.position.x == -4.47f 
+			&& balloonFloorTwo.GetComponent<SpriteRenderer>().color == alphaFullColor 
+			&& currentState == BallonState.Normal) {
 			canTakeIt = true;
 		} else {
 			canTakeIt = false;
 		}
 
-		if(player.transform.position.x == -4.47f && gameObject.tag =="BalloonTwo") {
+		if(player.transform.position.x == -4.47f) {
 			mouseOverType = MouseOverType.FloorTwo;
-		} else if (player.transform.transform.position.x == 0.36f && gameObject.tag == "BalloonFive") {
+		} else if (player.transform.transform.position.x == 0.36f) {
 			mouseOverType = MouseOverType.FloorFive;
-		} else if (player.transform.position.x == 7.14f && gameObject.tag == "BalloonSeven") {
+		} else if (player.transform.position.x == 7.14f) {
 			mouseOverType = MouseOverType.FloorSeven;
 		}
 
@@ -140,7 +144,15 @@ public class Balloon : MonoBehaviour {
 	}
 
 	void OnMouseOver(){
-		shineFloorSeven.SetActive(true);
+
+		if(balloonFloorTwo.GetComponent<SpriteRenderer>().color == alphaFullColor && gameObject.tag == "BalloonTwo") {
+			shineFloorTwo.SetActive(true);
+		} else if(balloonFloorFive.GetComponent<SpriteRenderer>().color == alphaFullColor && gameObject.tag == "BalloonFive") {
+			shineFloorTwo.SetActive(true);
+		} else if(balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor && gameObject.tag == "BalloonSeven") {
+			shineFloorSeven.SetActive(true);
+		}
+
 
 		switch(mouseOverType) {
 
@@ -155,12 +167,20 @@ public class Balloon : MonoBehaviour {
 
 				balloonFloorFive.GetComponent<SpriteRenderer>().color = alphaHalfColor;
 				balloonFloorTwo.GetComponent<SpriteRenderer>().color = alphaHalfColor;
+				balloonFloorSeven.GetComponent<SpriteRenderer>().color = alphaHalfColor;
 
 				balloonFloorFive.GetComponent<CircleCollider2D>().enabled = true;
 				balloonFloorTwo.GetComponent<CircleCollider2D>().enabled = true;
+				balloonFloorSeven.GetComponent<CircleCollider2D>().enabled = true;
 
 				balloonFloorFive.GetComponent<Balloon>().currentState = BallonState.Picked;
 				balloonFloorTwo.GetComponent<Balloon>().currentState = BallonState.Picked;
+				balloonFloorSeven.GetComponent<Balloon>().currentState = BallonState.Picked;
+
+				shineFloorTwo.SetActive(true);
+				shineFloorFive.SetActive(true);
+				shineFloorSeven.SetActive(true);
+
 				currentState = BallonState.Picked;
 
 			}else if(Input.GetMouseButtonDown(0) 
@@ -372,5 +392,7 @@ public class Balloon : MonoBehaviour {
 
 	void OnMouseExit(){
 		shineFloorSeven.SetActive(false);
+		shineFloorFive.SetActive(false);
+		shineFloorTwo.SetActive(false);
 	}
 }
