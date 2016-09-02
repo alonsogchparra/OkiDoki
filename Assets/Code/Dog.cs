@@ -132,6 +132,12 @@ public class Dog : MonoBehaviour {
 
 		transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
 
+		if(balloon.gameObject.tag == "BalloonSeven" || balloon.gameObject.tag == "BallooFive"){
+			transform.localScale = new Vector3(1f,1f,1f);
+		}else if(balloon.tag == "BalloonTwo"){
+			transform.localScale = new Vector3(-1f,1f,1f);
+		}
+
 		if(transform.position.x == target.x) {
 			
 			spriteRender.sprite = dogHasBalloon;
@@ -153,6 +159,11 @@ public class Dog : MonoBehaviour {
 		if(transform.position.x == balloon.balloonFloorTwo.transform.position.x) {
 			balloon.balloonFloorTwo.GetComponent<SpriteRenderer>().color = balloon.alphaFullColor;
 
+		} else if(transform.position.x == balloon.balloonFloorFive.transform.position.x) {
+			balloon.balloonFloorFive.GetComponent<SpriteRenderer>().color = balloon.alphaFullColor;
+
+		} else if(transform.position.x == balloon.balloonFloorSeven.transform.position.x) {
+			balloon.balloonFloorSeven.GetComponent<SpriteRenderer>().color = balloon.alphaFullColor;
 		}
 
 		transform.position = Vector3.MoveTowards(transform.position, start, Time.deltaTime * speed);
