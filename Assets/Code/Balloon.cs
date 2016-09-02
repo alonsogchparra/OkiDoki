@@ -22,6 +22,7 @@ public class Balloon : MonoBehaviour {
 	private SpriteRenderer spriteRender, sr_balloonFloorFive, sr_ballooFloorTwo; 
 	private Dog dog;
 	private Juice juice;
+	private Bowl bowl;
 
 
 	// Use this for initialization
@@ -30,6 +31,7 @@ public class Balloon : MonoBehaviour {
 		player = GameObject.Find("Oki").GetComponent<Player>();
 		dog = GameObject.Find("Doki").GetComponent<Dog>();
 		juice = GameObject.Find("Juice").GetComponent<Juice>();
+		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
 
 		spriteRender = GetComponent<SpriteRenderer>();
 		sr_ballooFloorTwo = gameObject.GetComponent<SpriteRenderer>();
@@ -63,14 +65,16 @@ public class Balloon : MonoBehaviour {
 
 
 		if(player.transform.position.x == 7.14f 
-			&& balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor) {
+			&& balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor 
+			&& !bowl.playerBowl.activeSelf) {
 			canTakeIt = true;
 		}else if(player.transform.position.x == 0.36f 
-			&& balloonFloorFive.GetComponent<SpriteRenderer>().color == alphaFullColor) {
+			&& balloonFloorFive.GetComponent<SpriteRenderer>().color == alphaFullColor
+			&& !bowl.playerBowl.activeSelf) {
 			canTakeIt = true;
 		} else if (player.transform.position.x == -4.47f 
 			&& balloonFloorTwo.GetComponent<SpriteRenderer>().color == alphaFullColor 
-			&& currentState == BallonState.Normal) {
+			&& currentState == BallonState.Normal && !bowl.playerBowl.activeSelf) {
 			canTakeIt = true;
 		} else {
 			canTakeIt = false;
