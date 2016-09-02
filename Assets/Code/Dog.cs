@@ -81,7 +81,6 @@ public class Dog : MonoBehaviour {
 		}
 
 		if(dogCount == 2 && currentState == DogState.HasBalloon) {
-			print("Voy a buscar las llaves");
 			BalloonToKeys(keys.transform.position);
 		}
 	}
