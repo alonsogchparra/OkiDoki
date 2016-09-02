@@ -175,12 +175,18 @@ public class Dog : MonoBehaviour {
 		}
 
 
-		if(transform.position == keys.transform.position) {
+		if(transform.position == keys.transform.position 
+			&& keys.spriteRender.color == keys.alphaFullColor) {
 			
 			spriteRender.sprite = dogHasKeys;
 			currentState = DogState.HasKeys;
 //			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
 			dogCount = 0;
+
+		} else if(transform.position == keys.transform.position 
+			&& keys.spriteRender.color == keys.alphaZeroColor) {
+
+			spriteRender.sprite = dogSurprise;
 
 		} else if (transform.position != keys.transform.position) {
 			
@@ -207,6 +213,9 @@ public class Dog : MonoBehaviour {
 			spriteRender.sprite = dogHasKeys;
 			currentState = DogState.HasKeys;
 			dogCount = 0;
+
+		} else if (transform.position.x == target.x && keys.spriteRender.color == keys.alphaZeroColor) {
+			spriteRender.sprite = dogSurprise;
 
 		} else if (transform.position.x != target.x) {
 
