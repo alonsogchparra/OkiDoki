@@ -38,7 +38,7 @@ public class Bowl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(player.transform.position.x == 7.14f) {
+		if(player.transform.position.x == 7.14f && !player.playerBalloon.activeSelf) {
 			canTakeIt = true;
 		} else {
 			canTakeIt = false;
