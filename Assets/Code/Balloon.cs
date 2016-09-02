@@ -148,7 +148,7 @@ public class Balloon : MonoBehaviour {
 		if(balloonFloorTwo.GetComponent<SpriteRenderer>().color == alphaFullColor && gameObject.tag == "BalloonTwo") {
 			shineFloorTwo.SetActive(true);
 		} else if(balloonFloorFive.GetComponent<SpriteRenderer>().color == alphaFullColor && gameObject.tag == "BalloonFive") {
-			shineFloorTwo.SetActive(true);
+			shineFloorFive.SetActive(true);
 		} else if(balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor && gameObject.tag == "BalloonSeven") {
 			shineFloorSeven.SetActive(true);
 		}
@@ -242,12 +242,20 @@ public class Balloon : MonoBehaviour {
 
 				balloonFloorFive.GetComponent<SpriteRenderer>().color = alphaHalfColor;
 				balloonFloorTwo.GetComponent<SpriteRenderer>().color = alphaHalfColor;
+				balloonFloorSeven.GetComponent<SpriteRenderer>().color = alphaHalfColor;
 
 				balloonFloorFive.GetComponent<CircleCollider2D>().enabled = true;
 				balloonFloorTwo.GetComponent<CircleCollider2D>().enabled = true;
+				balloonFloorSeven.GetComponent<CircleCollider2D>().enabled = true;
 
 				balloonFloorFive.GetComponent<Balloon>().currentState = BallonState.Picked;
 				balloonFloorTwo.GetComponent<Balloon>().currentState = BallonState.Picked;
+				balloonFloorSeven.GetComponent<Balloon>().currentState = BallonState.Picked;
+
+				shineFloorTwo.SetActive(true);
+				shineFloorFive.SetActive(true);
+				shineFloorSeven.SetActive(true);
+
 				currentState = BallonState.Picked;
 
 			}else if(Input.GetMouseButtonDown(0) 
