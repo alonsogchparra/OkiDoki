@@ -38,7 +38,7 @@ public class Floor : MonoBehaviour {
 		}
 
 		if(dog.currentState == Dog.DogState.Walking 
-			|| dog.currentState == Dog.DogState.FindingBallon) {
+			|| dog.currentState == Dog.DogState.FindingBallon || player.playerBalloon.activeSelf) {
 
 			player.currentPosition = player.transform.position;
 
