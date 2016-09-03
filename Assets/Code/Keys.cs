@@ -68,8 +68,11 @@ public class Keys : MonoBehaviour {
 
 
 		if(Input.GetMouseButtonDown(0) && canTakeIt) {
+			
 			player.playerKeys.SetActive(true);
 			spriteRender.color = alphaZeroColor;
+			player.actions++;
+
 		}
 	}
 
