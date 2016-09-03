@@ -29,6 +29,8 @@ public class Blender : MonoBehaviour {
 
 			player.currentPosition = player.transform.position;
 
+			player.actions++;
+
 		}
 
 	}
