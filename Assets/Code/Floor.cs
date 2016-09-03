@@ -47,39 +47,11 @@ public class Floor : MonoBehaviour {
 			}
 		}
 
-//		if(transform.position == balloon.balloonFloorSeven.transform.position) {
-//
-//			foreach(GameObject ground in floor.floors) {
-//				ground.GetComponent<PolygonCollider2D>().enabled = true;
-//			}
-//
-//		} else if(transform.position == balloon.balloonFloorFive.transform.position) {
-//
-//			foreach(GameObject ground in floor.floors) {
-//				ground.GetComponent<PolygonCollider2D>().enabled = true;
-//			}
-//
-//		} else if(transform.position == balloon.balloonFloorTwo.transform.position) {
-//
-//			foreach(GameObject ground in floor.floors) {
-//				ground.GetComponent<PolygonCollider2D>().enabled = true;
-//			}
-//
-//		} else if(transform.position == bowl.transform.position) {
-//
-//			foreach(GameObject ground in floor.floors) {
-//				ground.GetComponent<PolygonCollider2D>().enabled = true;
-//			}
-//
-//		}
-
 		if(dog.currentState == Dog.DogState.Eating || dog.currentState == Dog.DogState.HasBalloon) {
 			foreach(GameObject floor in floors) {
 				floor.GetComponent<PolygonCollider2D>().enabled = true;
 			}
 		}
-
-	
 	}
 
 	void MovePlayer(){
@@ -91,8 +63,22 @@ public class Floor : MonoBehaviour {
 	void OnMouseOver(){
 		this.GetComponent<SpriteRenderer>().color = hoverColor;
 
-		if(Input.GetMouseButtonDown(0) && player.canMove && player.currentState != Player.PlayerState.Sleepy) {
+		if(Input.GetMouseButtonDown(0) && player.canMove && player.transform.position.x == transform.position.x) {
+			juice.lvlNumber = juice.currentLvl;
+
+		} else if(Input.GetMouseButtonDown(0) 
+			&& player.canMove 
+			&& player.transform.position.x != transform.position.x 
+			&& player.currentState != Player.PlayerState.Sleepy) {
+
 			juice.lvlNumber--;
+
+			if(transform.position.x < player.transform.position.x) {
+				player.direction = -1;
+
+			}else if (transform.position.x >= player.transform.position.x){
+				player.direction = 1;
+			}
 
 			player.actions++;
 			player.currentPosition = transform.position;
@@ -107,6 +93,7 @@ public class Floor : MonoBehaviour {
 			player.currentPosition = player.transform.position;
 
 		}
+			
 
 //		print(player.canMove);
 
