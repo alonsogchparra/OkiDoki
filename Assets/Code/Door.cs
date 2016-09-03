@@ -52,6 +52,7 @@ public class Door : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0) && canOpenIt){
 
 			ChangeSprite();
+			player.actions++;
 
 		}
 	}
