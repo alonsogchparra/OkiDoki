@@ -6,6 +6,9 @@ public class Juice : MonoBehaviour {
 	public GameObject lvlOne, lvlTwo, lvlThree, lvlFour, lvlFive;
 	public int lvlNumber = 5;
 
+	[HideInInspector]
+	public int currentLvl = 0;
+
 //	private Player player;
 
 	// Use this for initialization
@@ -74,6 +77,8 @@ public class Juice : MonoBehaviour {
 			break;
 
 		}
+
+		currentLvl = lvlNumber;
 	
 	}
 }
