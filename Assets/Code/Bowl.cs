@@ -80,6 +80,8 @@ public class Bowl : MonoBehaviour {
 			currentState = BowlState.SignEmpty;
 			playerBowl.SetActive(true);
 
+			player.actions++;
+
 		} else if(Input.GetMouseButtonDown(0) 
 			&& canTakeIt && playerBowl.activeSelf && currentState == BowlState.SignEmpty) {
 
@@ -87,17 +89,23 @@ public class Bowl : MonoBehaviour {
 			currentState = BowlState.Empty;
 			playerBowl.SetActive(false);
 
+			player.actions++;
+
 		} else if (Input.GetMouseButtonDown(0) && currentState == BowlState.SignFood) {
 
 			spriteRender.color = alphaFullColor;
 			currentState = BowlState.Food;
 			playerBowl.SetActive(false);
 
+			player.actions++;
+
 		} else if(Input.GetMouseButtonDown(0) && currentState == BowlState.SignWater){
 
 			spriteRender.color = alphaFullColor;
 			currentState = BowlState.Water;
 			playerBowl.SetActive(false);
+
+			player.actions++;
 
 		}
 
