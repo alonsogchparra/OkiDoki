@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -17,11 +18,16 @@ public class Player : MonoBehaviour {
 	public GameObject playerBalloon, playerKeys;
 	public int actions = 0;
 
+	[HideInInspector]
+	public int direction = 0;
+
 	private SpriteRenderer spriteRender;
 	private DogFood dogFood;
 	private Bowl bowl;
 	private Dog dog;
 	private Floor floor;
+	private Text txtActions;
+//	private Camera cam;
 
 	// Use this for initialization
 	void Start () {
@@ -30,6 +36,8 @@ public class Player : MonoBehaviour {
 		dogFood = GameObject.Find("Dog Food").GetComponent<DogFood>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
 		dog = GameObject.Find("Doki").GetComponent<Dog>();
+		txtActions = GameObject.Find("Text Actions").GetComponent<Text>();
+//		cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
 		if(spriteRender.sprite == null || currentState == PlayerState.Happy) {
 			spriteRender.sprite = okiHappy;
@@ -103,10 +111,18 @@ public class Player : MonoBehaviour {
 //			Cursor.lockState = CursorLockMode.Confined;
 		}
 
+		if(direction == 1) {
+			transform.localScale = new Vector3(1f, 1f, 1f);
+		} else if(direction == -1) {
+			transform.localScale = new Vector3(-1f, 1f, 1f);
+		}
+
+		txtActions.text = (actions.ToString());
+
 	}
 
 	public void Flip() {
-		transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+		transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 	}
 
 	public void MoveTowards(Vector3 target) {
@@ -131,5 +147,5 @@ public class Player : MonoBehaviour {
 
 		}
 	}
-
+		
 }
