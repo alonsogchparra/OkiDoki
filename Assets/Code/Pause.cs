@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour {
 
@@ -25,6 +26,15 @@ public class Pause : MonoBehaviour {
 	public void PausePanelDeactivated() {
 
 		pausePanel.SetActive(false);
+
+	}
+
+	public void RestartGame() {
+//		Normally I would use this to reolad the scene, but Unity tells me this is obselete. So I going to use the 
+//		other way to reload the scene
+//		Application.LoadLevel(Application.loadedLevel);
+
+		SceneManager.LoadScene(0);
 
 	}
 
