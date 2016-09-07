@@ -28,7 +28,7 @@ public class Floor : MonoBehaviour {
 	void Update () {
 
 		if(juice.lvlNumber <= 5 && player.currentState != Player.PlayerState.Sleepy) {
-			if(juice.lvlNumber < 1){
+			if(juice.lvlNumber < 1) {
 				player.canMove = true;
 			}
 			player.canMove = true;
