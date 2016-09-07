@@ -4,11 +4,12 @@ using System.Collections;
 public class Fridge : MonoBehaviour {
 
 	public Sprite fridgeOpened, fridgeClosed;
-	public GameObject fridgeShine;
+	public GameObject fridgeShine, frigdePanel;
 	public bool canOpenIt;
 
 	private SpriteRenderer spriteRender;
 	private Player player;
+	private float sec = 1f;
 
 	// Use this for initialization
 	void Start () {
@@ -47,11 +48,20 @@ public class Fridge : MonoBehaviour {
 
 			ChangeSprite();
 			player.actions++;
+			StartCoroutine(FridgePanelOpened());
 
 		}
 	}
 
 	void OnMouseExit(){
 		fridgeShine.SetActive(false);
+	}
+
+	IEnumerator FridgePanelOpened() {
+
+		yield return new WaitForSeconds(sec);
+
+		frigdePanel.SetActive(true);
+
 	}
 }
