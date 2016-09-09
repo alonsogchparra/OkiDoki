@@ -47,7 +47,9 @@ public class Floor : MonoBehaviour {
 			}
 		}
 
-		if(dog.currentState == Dog.DogState.Eating || dog.currentState == Dog.DogState.HasBalloon) {
+		if(dog.currentState == Dog.DogState.Eating 
+			|| dog.currentState == Dog.DogState.HasBalloon || dog.currentState == Dog.DogState.HasKeys) {
+
 			foreach(GameObject floor in floors) {
 				floor.GetComponent<PolygonCollider2D>().enabled = true;
 			}
