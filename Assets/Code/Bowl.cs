@@ -14,12 +14,14 @@ public class Bowl : MonoBehaviour {
 	private SpriteRenderer spriteRender;
 	private Player player;
 	private Color alphaHalfColor, alphaFullColor;
+	private Juice juice;
 
 
 	// Use this for initialization
 	void Start () {
 
 		player = GameObject.Find("Oki").GetComponent<Player>();
+		juice = GameObject.Find("Juice").GetComponent<Juice>();
 
 //		playerBowl = GameObject.Find("Oki Bowl");
 
@@ -46,9 +48,9 @@ public class Bowl : MonoBehaviour {
 
 		switch (currentState) {
 
-//			case BowlState.Empty:
-//				spriteRender.sprite = bowlEmpty;
-//				break;
+			case BowlState.Empty:
+				spriteRender.sprite = bowlEmpty;
+				break;
 
 			case BowlState.SignEmpty:
 				bowlShine.SetActive(true);
@@ -81,6 +83,7 @@ public class Bowl : MonoBehaviour {
 			playerBowl.SetActive(true);
 
 			player.actions++;
+			juice.lvlNumber--;
 
 		} else if(Input.GetMouseButtonDown(0) 
 			&& canTakeIt && playerBowl.activeSelf && currentState == BowlState.SignEmpty) {
@@ -90,6 +93,7 @@ public class Bowl : MonoBehaviour {
 			playerBowl.SetActive(false);
 
 			player.actions++;
+			juice.lvlNumber--;
 
 		} else if (Input.GetMouseButtonDown(0) && currentState == BowlState.SignFood) {
 
@@ -98,6 +102,7 @@ public class Bowl : MonoBehaviour {
 			playerBowl.SetActive(false);
 
 			player.actions++;
+			juice.lvlNumber--;
 
 		} else if(Input.GetMouseButtonDown(0) && currentState == BowlState.SignWater){
 
@@ -106,6 +111,7 @@ public class Bowl : MonoBehaviour {
 			playerBowl.SetActive(false);
 
 			player.actions++;
+			juice.lvlNumber--;
 
 		}
 
