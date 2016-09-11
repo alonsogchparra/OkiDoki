@@ -23,7 +23,8 @@ public class Blender : MonoBehaviour {
 	void OnMouseOver(){
 		blenderShine.SetActive(true);
 
-		if(Input.GetMouseButtonDown(0) && juice.lvlNumber < 5) {
+		if(Input.GetMouseButtonDown(0) && juice.lvlNumber < 5 
+			&& juice.lvlNumber >= 1 && player.currentState != Player.PlayerState.Sleepy) {
 
 			juice.lvlNumber = 5;
 
