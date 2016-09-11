@@ -118,12 +118,6 @@ public class Dog : MonoBehaviour {
 
 	void DogMoveToBalloon(Vector3 target) {
 
-		_isFacingRight = transform.localScale.x > 0;
-
-		if(_isFacingRight) {
-			Flip();
-		}
-
 		if(currentState == DogState.FindingBallon) {
 			spriteRender.sprite = dogFindingBallon;
 		}
@@ -183,14 +177,14 @@ public class Dog : MonoBehaviour {
 //			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
 			dogCount = 0;
 
-		} else if(transform.position == keys.transform.position 
+		} else if(transform.position.x == keys.transform.position.x 
 			&& keys.spriteRender.color == keys.alphaZeroColor) {
 
 			spriteRender.sprite = dogSurprise;
 
-		} else if (transform.position != keys.transform.position) {
+		} else if (transform.position.x != keys.transform.position.x) {
 			
-//			currentState = DogState.Walking;
+			currentState = DogState.Walking;
 			spriteRender.sortingOrder = 30;
 		}
 
