@@ -196,6 +196,8 @@ public class Balloon : MonoBehaviour {
 
 				currentState = BallonState.Picked;
 
+				juice.lvlNumber--;
+
 				player.actions++;
 
 			}else if(Input.GetMouseButtonDown(0) 
@@ -211,6 +213,8 @@ public class Balloon : MonoBehaviour {
 
 				spriteRender.color = alphaFullColor;
 				currentState = BallonState.Wanted;
+
+				juice.lvlNumber--;
 
 				player.actions++;
 
@@ -229,6 +233,8 @@ public class Balloon : MonoBehaviour {
 
 				currentState = BallonState.Wanted;
 
+				juice.lvlNumber--;
+
 				player.actions++;
 
 			} else if (Input.GetMouseButtonDown(0) 
@@ -245,6 +251,8 @@ public class Balloon : MonoBehaviour {
 				balloonFloorSeven.GetComponent<CircleCollider2D>().enabled = false;
 
 				currentState = BallonState.Wanted;
+
+				juice.lvlNumber--;
 
 				player.actions++;
 
@@ -278,6 +286,8 @@ public class Balloon : MonoBehaviour {
 				shineFloorSeven.SetActive(true);
 
 				currentState = BallonState.Picked;
+
+				juice.lvlNumber--;
 
 				player.actions++;
 
@@ -374,6 +384,8 @@ public class Balloon : MonoBehaviour {
 				spriteRender.color = alphaFullColor;
 				currentState = BallonState.Wanted;
 
+				juice.lvlNumber--;
+
 				player.actions++;
 
 			} else if (Input.GetMouseButtonDown(0) 
@@ -391,6 +403,8 @@ public class Balloon : MonoBehaviour {
 
 				currentState = BallonState.Wanted;
 
+				juice.lvlNumber--;
+
 				player.actions++;
 
 			} else if (Input.GetMouseButtonDown(0) 
@@ -407,6 +421,8 @@ public class Balloon : MonoBehaviour {
 				balloonFloorSeven.GetComponent<CircleCollider2D>().enabled = false;
 
 				currentState = BallonState.Wanted;
+
+				juice.lvlNumber--;
 
 				player.actions++;
 
