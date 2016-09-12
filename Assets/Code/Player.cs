@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
 	public SpriteRenderer bowlSpriteRender;
 	public GameObject playerBalloon, playerKeys, gameOverPanel;
 	public int actions = 0;
-	public Text gameOverActions;
+	public Text gameOverActions, winnerActions;
 
 	[HideInInspector]
 	public int direction = 0;
@@ -122,6 +122,7 @@ public class Player : MonoBehaviour {
 
 		txtActions.text = (actions.ToString());
 		gameOverActions.text = (actions.ToString());
+		winnerActions.text = (actions.ToString());
 
 		if(bowl.currentState == Bowl.BowlState.Empty) {
 			bowlSpriteRender.sprite = bowlEmpty;
