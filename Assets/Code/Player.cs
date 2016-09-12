@@ -119,6 +119,10 @@ public class Player : MonoBehaviour {
 
 		txtActions.text = (actions.ToString());
 
+		if(bowl.currentState == Bowl.BowlState.Empty) {
+			bowlSpriteRender.sprite = bowlEmpty;
+		}
+
 	}
 
 	public void Flip() {
