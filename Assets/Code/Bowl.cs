@@ -15,6 +15,7 @@ public class Bowl : MonoBehaviour {
 	private Player player;
 	private Color alphaHalfColor, alphaFullColor;
 	private Juice juice;
+	private Fridge fridge;
 
 
 	// Use this for initialization
@@ -22,6 +23,7 @@ public class Bowl : MonoBehaviour {
 
 		player = GameObject.Find("Oki").GetComponent<Player>();
 		juice = GameObject.Find("Juice").GetComponent<Juice>();
+		fridge = GameObject.Find("Frigde").GetComponent<Fridge>();
 
 //		playerBowl = GameObject.Find("Oki Bowl");
 
@@ -112,6 +114,8 @@ public class Bowl : MonoBehaviour {
 
 			player.actions++;
 			juice.lvlNumber--;
+
+			fridge.imgBowl.sprite = fridge.spriteBowlEmpty;
 
 		}
 
