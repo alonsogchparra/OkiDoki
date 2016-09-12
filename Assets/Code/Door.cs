@@ -4,11 +4,12 @@ using System.Collections;
 public class Door : MonoBehaviour {
 
 	public Sprite doorClosed, doorOpened;
-	public GameObject doorShine; 
+	public GameObject doorShine, winnerPanel; 
 	public bool canOpenIt;
 
 	private SpriteRenderer spriteRender;
 	private Player player;
+	private float sec = 3f;
 
 	// Use this for initialization
 	void Start () {
@@ -33,27 +34,39 @@ public class Door : MonoBehaviour {
 	}
 
 
-	void ChangeSprite(){
+	void ChangeSprite() {
 
-		if(spriteRender.sprite == doorClosed)
+		if(spriteRender.sprite == doorClosed) {
+			
 			spriteRender.sprite = doorOpened;
+			StartCoroutine(Winner());
+		}
+			
 	
 	}
 
-	void OnMouseExit(){
+	void OnMouseExit() {
 		doorShine.SetActive(false);
 	}
 
-	void OnMouseOver(){
+	void OnMouseOver() {
 
 		if(spriteRender.sprite == doorClosed)
 			doorShine.SetActive(true);
 
-		if(Input.GetMouseButtonDown(0) && canOpenIt){
+		if(Input.GetMouseButtonDown(0) && canOpenIt) {
 
 			ChangeSprite();
 			player.actions++;
 
 		}
+	}
+
+	IEnumerator Winner() {
+
+		yield return new WaitForSeconds(sec);
+
+		winnerPanel.SetActive(true);
+
 	}
 }

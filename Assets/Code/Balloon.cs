@@ -23,6 +23,7 @@ public class Balloon : MonoBehaviour {
 	private Dog dog;
 	private Juice juice;
 	private Bowl bowl;
+//	private Floor floor;
 
 
 	// Use this for initialization
@@ -32,6 +33,7 @@ public class Balloon : MonoBehaviour {
 		dog = GameObject.Find("Doki").GetComponent<Dog>();
 		juice = GameObject.Find("Juice").GetComponent<Juice>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
+//		floor = GameObject.Find("Floor 1").GetComponent<Floor>();
 
 		spriteRender = GetComponent<SpriteRenderer>();
 		sr_ballooFloorTwo = gameObject.GetComponent<SpriteRenderer>();
@@ -144,7 +146,6 @@ public class Balloon : MonoBehaviour {
 			shineFloorSeven.SetActive(false);
 
 		}
-	
 	}
 
 	void OnMouseOver(){

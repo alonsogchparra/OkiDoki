@@ -54,6 +54,7 @@ public class Floor : MonoBehaviour {
 				floor.GetComponent<PolygonCollider2D>().enabled = true;
 			}
 		}
+
 	}
 
 	void MovePlayer(){
