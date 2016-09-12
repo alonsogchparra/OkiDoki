@@ -8,13 +8,14 @@ public class DogFood : MonoBehaviour {
 
 	private Player player;
 	private Bowl bowl;
+	private Juice juice;
 
 	// Use this for initialization
 	void Start () {
 	
 		player = GameObject.Find("Oki").GetComponent<Player>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
-
+		juice = GameObject.Find("Juice").GetComponent<Juice>();
 	}
 	
 	// Update is called once per frame
@@ -35,6 +36,7 @@ public class DogFood : MonoBehaviour {
 			player.ChangeBowlSprite();
 
 			player.actions++;
+			juice.lvlNumber--;
 
 		}
 
