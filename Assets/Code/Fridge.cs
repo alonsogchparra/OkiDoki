@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Fridge : MonoBehaviour {
 
-	public Sprite fridgeOpened, fridgeClosed;
+	public Sprite fridgeOpened, fridgeClosed, spriteBowlWater, spriteBowlEmpty;
 	public GameObject fridgeShine, frigdePanel, servingWater;
 	public bool canOpenIt, canServeWater;
 
@@ -48,6 +48,9 @@ public class Fridge : MonoBehaviour {
 
 			imgBowl.color = alphaFullColor;
 			
+		} else {
+
+			imgBowl.color = alphaHalfColor;
 		}
 	
 	}
@@ -91,8 +94,14 @@ public void ChangeSprite(){
 
 	public void FillBowlWater() {
 		if(Input.GetMouseButtonDown(0) && bowl.playerBowl.activeSelf && canServeWater) {
+			
 			servingWater.SetActive(true);
+			imgBowl.sprite = spriteBowlWater;
+			bowl.currentState = Bowl.BowlState.SignWater;
+
+			player.bowlSpriteRender.sprite = player.bowlWater;
 			StartCoroutine(BowlWaterFull());
+
 		}
 	}
 
@@ -100,7 +109,8 @@ public void ChangeSprite(){
 
 		yield return new WaitForSeconds(secs);
 
-		servingWater.SetActive(false);
 		canServeWater = false;
+		servingWater.SetActive(false);
+
 	}
 }
