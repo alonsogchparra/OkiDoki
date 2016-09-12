@@ -169,7 +169,7 @@ public class Dog : MonoBehaviour {
 		}
 
 
-		if(transform.position == keys.transform.position 
+		if(transform.position.x == keys.transform.position.x 
 			&& keys.spriteRender.color == keys.alphaFullColor) {
 			
 			spriteRender.sprite = dogHasKeys;
@@ -184,10 +184,9 @@ public class Dog : MonoBehaviour {
 
 		} else if (transform.position.x != keys.transform.position.x) {
 			
-			currentState = DogState.Walking;
+//			currentState = DogState.Walking;
 			spriteRender.sortingOrder = 30;
 		}
-
 	}
 
 	void DogMoveToKeys() {
