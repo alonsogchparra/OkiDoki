@@ -15,8 +15,9 @@ public class Player : MonoBehaviour {
 	public Juice juice;
 	public Sprite bowlEmpty, bowlFood, bowlWater;
 	public SpriteRenderer bowlSpriteRender;
-	public GameObject playerBalloon, playerKeys;
+	public GameObject playerBalloon, playerKeys, gameOverPanel;
 	public int actions = 0;
+	public Text gameOverActions;
 
 	[HideInInspector]
 	public int direction = 0;
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour {
 	private Dog dog;
 	private Floor floor;
 	private Text txtActions;
+	private float sec = 2f;
 //	private Camera cam;
 
 	// Use this for initialization
@@ -85,6 +87,7 @@ public class Player : MonoBehaviour {
 		case 0:
 			currentState = PlayerState.Sleepy;
 			spriteRender.sprite = okiSleepy;
+			StartCoroutine(GameOver());
 			break;
 
 		default:
@@ -118,6 +121,7 @@ public class Player : MonoBehaviour {
 		}
 
 		txtActions.text = (actions.ToString());
+		gameOverActions.text = (actions.ToString());
 
 		if(bowl.currentState == Bowl.BowlState.Empty) {
 			bowlSpriteRender.sprite = bowlEmpty;
@@ -150,6 +154,14 @@ public class Player : MonoBehaviour {
 			bowl.currentState = Bowl.BowlState.SignFood;
 
 		}
+	}
+
+	IEnumerator GameOver() {
+
+		yield return new WaitForSeconds(sec);
+
+		gameOverPanel.SetActive(true);
+
 	}
 		
 }
