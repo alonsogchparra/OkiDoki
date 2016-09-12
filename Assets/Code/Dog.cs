@@ -54,7 +54,7 @@ public class Dog : MonoBehaviour {
 		}
 
 
-		if(bowl.currentState == Bowl.BowlState.Food) {
+		if(bowl.currentState == Bowl.BowlState.Food || bowl.currentState == Bowl.BowlState.Water) {
 			DogMoveToBowl();
 		} else if (bowl.currentState == Bowl.BowlState.Empty && dogCount == 3) {
 			DogMoveToKeys();
