@@ -11,6 +11,7 @@ public class Floor : MonoBehaviour {
 	private Color hoverColor, normalColor;
 	private Player player;
 	private Dog dog;
+	private bool canClickFloor;
 
 
 	// Use this for initialization
@@ -27,14 +28,19 @@ public class Floor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(juice.lvlNumber <= 5 && player.currentState != Player.PlayerState.Sleepy) {
-			if(juice.lvlNumber < 1) {
-				player.canMove = true;
-			}
+		if(juice.lvlNumber < 1) {
+			
 			player.canMove = true;
+
+		}else if(juice.lvlNumber <= 5 && player.currentState != Player.PlayerState.Sleepy) {
+			
+			player.canMove = true;
+
 		} else if ( juice.lvlNumber <= 0 
 			|| player.currentState == Player.PlayerState.Sleepy || player.playerBalloon.activeSelf) {
+
 			player.canMove = false;
+
 		}
 
 		if(dog.currentState == Dog.DogState.Walking 
@@ -55,6 +61,20 @@ public class Floor : MonoBehaviour {
 			}
 		}
 
+		if(player.playerBalloon.activeSelf) {
+			player.currentPosition = player.transform.position;
+
+			foreach(GameObject floor in floors) {
+				floor.GetComponent<PolygonCollider2D>().enabled = false;
+			}
+		}
+
+		if(player.currentPosition == transform.position || player.currentPosition == player.transform.position) {
+			canClickFloor = true;
+		} else if(player.currentPosition != transform.position || player.currentPosition != player.transform.position) {
+			canClickFloor = false;
+		}
+
 	}
 
 	void MovePlayer(){
@@ -66,37 +86,42 @@ public class Floor : MonoBehaviour {
 	void OnMouseOver(){
 		this.GetComponent<SpriteRenderer>().color = hoverColor;
 
-		if(Input.GetMouseButtonDown(0) && player.canMove && player.transform.position.x == transform.position.x) {
-			juice.lvlNumber = juice.currentLvl;
+		if(canClickFloor) {
 
-		} else if(Input.GetMouseButtonDown(0) 
-			&& player.canMove 
-			&& player.transform.position.x != transform.position.x 
-			&& player.currentState != Player.PlayerState.Sleepy) {
+			if(Input.GetMouseButtonDown(0) && player.canMove && player.transform.position.x == transform.position.x) {
+				juice.lvlNumber = juice.currentLvl;
 
-			juice.lvlNumber--;
+			} else if(Input.GetMouseButtonDown(0) 
+				&& player.canMove 
+				&& player.transform.position.x != transform.position.x 
+				&& player.currentState != Player.PlayerState.Sleepy) {
 
-			if(transform.position.x < player.transform.position.x) {
-				player.direction = -1;
+				juice.lvlNumber--;
 
-			}else if (transform.position.x >= player.transform.position.x){
-				player.direction = 1;
+				if(transform.position.x < player.transform.position.x) {
+					player.direction = -1;
+
+				}else if (transform.position.x >= player.transform.position.x){
+					player.direction = 1;
+				}
+
+				player.actions++;
+				player.currentPosition = transform.position;
+
+				if(dog.currentState == Dog.DogState.Eating || dog.currentState == Dog.DogState.HasBalloon) {
+					dog.dogCount++;
+				}
+
+
+			} else if (Input.GetMouseButtonDown(0) && !player.canMove && player.currentState == Player.PlayerState.Sleepy) {
+	//			return;
+				player.currentPosition = player.transform.position;
+
 			}
 
-			player.actions++;
-			player.currentPosition = transform.position;
-
-			if(dog.currentState == Dog.DogState.Eating || dog.currentState == Dog.DogState.HasBalloon) {
-				dog.dogCount++;
-			}
-
-
-		} else if (Input.GetMouseButtonDown(0) && !player.canMove && player.currentState == Player.PlayerState.Sleepy) {
-//			return;
-			player.currentPosition = player.transform.position;
-
+		}else {
+			return;
 		}
-			
 
 //		print(player.canMove);
 
