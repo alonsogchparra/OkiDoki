@@ -24,7 +24,8 @@ public class Blender : MonoBehaviour {
 		blenderShine.SetActive(true);
 
 		if(Input.GetMouseButtonDown(0) && juice.lvlNumber < 5 
-			&& juice.lvlNumber >= 1 && player.currentState != Player.PlayerState.Sleepy) {
+			&& juice.lvlNumber >= 1 && player.currentState != Player.PlayerState.Sleepy 
+			&& player.transform.position.x == -2.85f) {
 
 			juice.lvlNumber = 5;
 
@@ -32,6 +33,8 @@ public class Blender : MonoBehaviour {
 
 			player.actions++;
 
+		} else {
+			return;
 		}
 
 	}
