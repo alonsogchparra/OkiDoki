@@ -8,10 +8,13 @@ public class Floor : MonoBehaviour {
 
 	public GameObject[] floors;
 
+	[HideInInspector]
+	public int countClicks = 0;
+
 	private Color hoverColor, normalColor;
 	private Player player;
 	private Dog dog;
-	private bool canClickFloor;
+	private bool canClickFloor, clickOnce;
 
 
 	// Use this for initialization
@@ -71,7 +74,10 @@ public class Floor : MonoBehaviour {
 
 		if(player.currentPosition == transform.position || player.currentPosition == player.transform.position) {
 			canClickFloor = true;
-		} else if(player.currentPosition != transform.position || player.currentPosition != player.transform.position) {
+
+		} else if(player.currentPosition != transform.position 
+			|| player.currentPosition != player.transform.position) {
+
 			canClickFloor = false;
 		}
 
@@ -96,6 +102,8 @@ public class Floor : MonoBehaviour {
 				&& player.transform.position.x != transform.position.x 
 				&& player.currentState != Player.PlayerState.Sleepy) {
 
+				countClicks++;
+
 				juice.lvlNumber--;
 
 				if(transform.position.x < player.transform.position.x) {
@@ -105,7 +113,13 @@ public class Floor : MonoBehaviour {
 					player.direction = 1;
 				}
 
-				player.actions++;
+				if(player.isMoving) {
+					player.actions = player.currentActions;
+					juice.lvlNumber = juice.currentLvl;
+				} else {
+					player.actions++;
+				}
+					
 				player.currentPosition = transform.position;
 
 				if(dog.currentState == Dog.DogState.Eating || dog.currentState == Dog.DogState.HasBalloon) {
@@ -113,18 +127,16 @@ public class Floor : MonoBehaviour {
 				}
 
 
-			} else if (Input.GetMouseButtonDown(0) && !player.canMove && player.currentState == Player.PlayerState.Sleepy) {
-	//			return;
+			} else if (Input.GetMouseButtonDown(0) 
+				&& !player.canMove && player.currentState == Player.PlayerState.Sleepy) {
+
 				player.currentPosition = player.transform.position;
 
 			}
-
+				
 		}else {
 			return;
 		}
-
-//		print(player.canMove);
-
 	}
 
 	void OnMouseExit(){
