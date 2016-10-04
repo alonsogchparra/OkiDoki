@@ -49,6 +49,8 @@ public class Dog : MonoBehaviour {
 			balloon.balloonFloorFive.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
 			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
 
+			BalloonToKeys(keys.transform.position);
+
 		} else if(dogCount == 3) {
 			bowl.currentState = Bowl.BowlState.Empty;
 		}
@@ -80,9 +82,13 @@ public class Dog : MonoBehaviour {
 
 		}
 
-		if(dogCount == 2 && currentState == DogState.HasBalloon) {
-			BalloonToKeys(keys.transform.position);
-		}
+//		if(dogCount == 2 && currentState == DogState.HasBalloon) {
+//			BalloonToKeys(keys.transform.position);
+//		}
+
+//		if(dogCount == 2) {
+//			BalloonToKeys(keys.transform.position);
+//		}
 	}
 
 
@@ -171,10 +177,10 @@ public class Dog : MonoBehaviour {
 
 		if(transform.position.x == keys.transform.position.x 
 			&& keys.spriteRender.color == keys.alphaFullColor) {
-			
+
 			spriteRender.sprite = dogHasKeys;
 			currentState = DogState.HasKeys;
-//			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
+			//			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
 			dogCount = 0;
 
 		} else if(transform.position.x == keys.transform.position.x 
@@ -183,10 +189,11 @@ public class Dog : MonoBehaviour {
 			spriteRender.sprite = dogSurprise;
 
 		} else if (transform.position.x != keys.transform.position.x) {
-			
-//			currentState = DogState.Walking;
+
+			currentState = DogState.Walking;
 			spriteRender.sortingOrder = 30;
 		}
+
 	}
 
 	void DogMoveToKeys() {
