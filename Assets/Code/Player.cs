@@ -18,9 +18,12 @@ public class Player : MonoBehaviour {
 	public GameObject playerBalloon, playerKeys, gameOverPanel;
 	public int actions = 0;
 	public Text gameOverActions, winnerActions;
+	public bool isMoving;
 
 	[HideInInspector]
 	public int direction = 0;
+	[HideInInspector]
+	public int currentActions;
 
 	private SpriteRenderer spriteRender;
 	private DogFood dogFood;
@@ -29,7 +32,6 @@ public class Player : MonoBehaviour {
 	private Floor floor;
 	private Text txtActions;
 	private float sec = 2f;
-//	private Camera cam;
 
 	// Use this for initialization
 	void Start () {
@@ -39,7 +41,6 @@ public class Player : MonoBehaviour {
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
 		dog = GameObject.Find("Doki").GetComponent<Dog>();
 		txtActions = GameObject.Find("Text Actions").GetComponent<Text>();
-//		cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
 		if(spriteRender.sprite == null || currentState == PlayerState.Happy) {
 			spriteRender.sprite = okiHappy;
@@ -99,6 +100,10 @@ public class Player : MonoBehaviour {
 		if(currentPosition != transform.position && canMove) {
 
 			MoveTowards(currentPosition);
+			isMoving = true;
+
+		} else if(currentPosition == transform.position && canMove) {
+			isMoving = false;
 
 		} else if (!canMove) {
 			return;
@@ -127,6 +132,8 @@ public class Player : MonoBehaviour {
 		if(bowl.currentState == Bowl.BowlState.Empty) {
 			bowlSpriteRender.sprite = bowlEmpty;
 		}
+
+		currentActions = actions;
 
 	}
 
