@@ -57,6 +57,10 @@ public class Keys : MonoBehaviour {
 		if(player.playerKeys.activeSelf) {
 			spriteRender.color = alphaZeroColor;
 		}
+
+		if(dog.transform.position.x == transform.position.x && spriteRender.color == alphaZeroColor) {
+			dog.currentState = Dog.DogState.Surprise;
+		}
 	
 	}
 
