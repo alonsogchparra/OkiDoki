@@ -15,6 +15,7 @@ public class Floor : MonoBehaviour {
 	private Player player;
 	private Dog dog;
 	private bool canClickFloor, clickOnce;
+	private Door door;
 
 
 	// Use this for initialization
@@ -25,6 +26,7 @@ public class Floor : MonoBehaviour {
 
 		player = GameObject.Find("Oki").GetComponent<Player>();
 		dog = GameObject.Find("Doki").GetComponent<Dog>();
+		door = GameObject.Find("Door").GetComponent<Door>();
 
 	}
 	
@@ -47,7 +49,8 @@ public class Floor : MonoBehaviour {
 		}
 
 		if(dog.currentState == Dog.DogState.Walking 
-			|| dog.currentState == Dog.DogState.FindingBallon || player.playerBalloon.activeSelf) {
+			|| dog.currentState == Dog.DogState.FindingBallon 
+			|| player.playerBalloon.activeSelf ) {
 
 			player.currentPosition = player.transform.position;
 
@@ -57,7 +60,9 @@ public class Floor : MonoBehaviour {
 		}
 
 		if(dog.currentState == Dog.DogState.Eating 
-			|| dog.currentState == Dog.DogState.HasBalloon || dog.currentState == Dog.DogState.HasKeys) {
+			|| dog.currentState == Dog.DogState.HasBalloon 
+			|| dog.currentState == Dog.DogState.HasKeys 
+			|| dog.currentState == Dog.DogState.Surprise) {
 
 			foreach(GameObject floor in floors) {
 				floor.GetComponent<PolygonCollider2D>().enabled = true;
@@ -66,6 +71,13 @@ public class Floor : MonoBehaviour {
 
 		if(player.playerBalloon.activeSelf) {
 			player.currentPosition = player.transform.position;
+
+			foreach(GameObject floor in floors) {
+				floor.GetComponent<PolygonCollider2D>().enabled = false;
+			}
+		}
+
+		if(door.spriteRender.sprite == door.doorOpened || player.gameOverPanel.activeSelf) {
 
 			foreach(GameObject floor in floors) {
 				floor.GetComponent<PolygonCollider2D>().enabled = false;
