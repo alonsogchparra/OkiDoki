@@ -43,7 +43,7 @@ public class Dog : MonoBehaviour {
 
 		//TODO: DEPENDE DONDE EL PERRO DEJE EL BALON, QUEDA ACTIVO PARA VOLVERLO AGARRAR
 
-		if(dogCount == 2) {
+		if(dogCount == 2 && currentState != DogState.Eating) {
 			
 			balloon.currentState = Balloon.BallonState.Normal;
 			balloon.balloonFloorFive.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
@@ -53,6 +53,7 @@ public class Dog : MonoBehaviour {
 
 		} else if(dogCount == 3) {
 			bowl.currentState = Bowl.BowlState.Empty;
+
 		}
 
 
