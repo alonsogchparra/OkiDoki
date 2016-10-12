@@ -7,7 +7,9 @@ public class Door : MonoBehaviour {
 	public GameObject doorShine, winnerPanel; 
 	public bool canOpenIt;
 
-	private SpriteRenderer spriteRender;
+	[HideInInspector]
+	public SpriteRenderer spriteRender;
+
 	private Player player;
 	private float sec = 3f;
 
@@ -30,7 +32,6 @@ public class Door : MonoBehaviour {
 		} else {
 			canOpenIt = false;
 		}
-	
 	}
 
 
