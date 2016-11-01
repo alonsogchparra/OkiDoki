@@ -14,6 +14,8 @@ public class Dog : MonoBehaviour {
 
 	public int dogCount = 0;
 
+	public AudioSource yappingSound, eatingSound;
+
 	private Bowl bowl;
 	private Balloon balloon;
 	private SpriteRenderer spriteRender;
@@ -99,6 +101,8 @@ public class Dog : MonoBehaviour {
 
 
 	void DogMoveToBowl() {
+
+		yappingSound.Play();
 
 		if(currentState == DogState.Walking) {
 			spriteRender.sprite = dogWalking;	
