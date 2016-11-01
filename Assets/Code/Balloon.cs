@@ -15,6 +15,8 @@ public class Balloon : MonoBehaviour {
 
 	public GameObject balloonFloorTwo, balloonFloorFive, balloonFloorSeven;
 
+	public AudioSource cannotSound, tennisBallSound;
+
 	[HideInInspector]
 	public Color alphaHalfColor, alphaFullColor, alphaZeroColor;
 
@@ -171,7 +173,14 @@ public class Balloon : MonoBehaviour {
 
 		case MouseOverType.FloorTwo:
 
-			if(Input.GetMouseButtonDown(0) && canTakeIt) {
+			if(Input.GetMouseButtonDown(0) && !canTakeIt 
+				&& balloonFloorTwo.GetComponent<SpriteRenderer>().color == alphaFullColor) {
+				
+				cannotSound.Play();
+
+			} else if(Input.GetMouseButtonDown(0) && canTakeIt) {
+
+				tennisBallSound.Play();
 
 				playerBalloon.SetActive(true);
 
@@ -262,7 +271,14 @@ public class Balloon : MonoBehaviour {
 
 		case MouseOverType.FloorFive:
 
-			if(Input.GetMouseButtonDown(0) && canTakeIt) {
+			if(Input.GetMouseButtonDown(0) && !canTakeIt 
+				&& balloonFloorFive.GetComponent<SpriteRenderer>().color == alphaFullColor) {
+				
+				cannotSound.Play();
+
+			} else if(Input.GetMouseButtonDown(0) && canTakeIt) {
+
+				tennisBallSound.Play();
 
 				playerBalloon.SetActive(true);
 
@@ -350,7 +366,14 @@ public class Balloon : MonoBehaviour {
 		
 		case MouseOverType.FloorSeven:
 
-			if(Input.GetMouseButtonDown(0) && canTakeIt) {
+			if(Input.GetMouseButtonDown(0) && !canTakeIt 
+				&& balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor) {
+				
+				cannotSound.Play();
+
+			}else if(Input.GetMouseButtonDown(0) && canTakeIt) {
+
+				tennisBallSound.Play();
 
 				playerBalloon.SetActive(true);
 
