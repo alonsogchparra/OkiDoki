@@ -4,6 +4,7 @@ using System.Collections;
 public class Blender : MonoBehaviour {
 
 	public GameObject blenderShine;
+	public AudioSource blenderSound, cannotSound;
 
 	private Juice juice;
 	private Player player;
@@ -27,11 +28,13 @@ public class Blender : MonoBehaviour {
 			&& juice.lvlNumber >= 1 && player.currentState != Player.PlayerState.Sleepy 
 			&& player.transform.position.x == -2.85f) {
 
+			blenderSound.Play();
 			juice.lvlNumber = 5;
-
 			player.currentPosition = player.transform.position;
-
 			player.actions++;
+
+		} else if(Input.GetMouseButtonDown(0) && player.transform.position.x != -2.85f){
+			cannotSound.Play();
 
 		} else {
 			return;
