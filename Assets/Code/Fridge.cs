@@ -7,6 +7,8 @@ public class Fridge : MonoBehaviour {
 	public Sprite fridgeOpened, fridgeClosed, spriteBowlWater, spriteBowlEmpty;
 	public GameObject fridgeShine, frigdePanel, servingWater;
 	public bool canOpenIt, canServeWater;
+	public AudioSource fridgeSound, cannotSound; //Fridge
+	public AudioSource waterSound; //Water
 
 
 	public Image imgBowl;
@@ -70,10 +72,14 @@ public void ChangeSprite(){
 
 		if(Input.GetMouseButtonDown(0) && canOpenIt ){
 
+			fridgeSound.Play();
+
 			ChangeSprite();
 			player.actions++;
 			StartCoroutine(FridgePanelOpened());
 
+		} else if (Input.GetMouseButtonDown(0) && !canOpenIt) {
+			cannotSound.Play();
 		}
 	}
 
@@ -93,8 +99,11 @@ public void ChangeSprite(){
 
 
 	public void FillBowlWater() {
-		if(Input.GetMouseButtonDown(0) && bowl.playerBowl.activeSelf && canServeWater) {
-			
+
+		if(bowl.playerBowl.activeSelf && canServeWater) {
+
+			waterSound.Play();
+
 			servingWater.SetActive(true);
 			imgBowl.sprite = spriteBowlWater;
 			bowl.currentState = Bowl.BowlState.SignWater;
@@ -102,8 +111,13 @@ public void ChangeSprite(){
 			player.bowlSpriteRender.sprite = player.bowlWater;
 			StartCoroutine(BowlWaterFull());
 
+		} else {
+
+			cannotSound.Play();
+
 		}
 	}
+		
 
 	IEnumerator BowlWaterFull() {
 
