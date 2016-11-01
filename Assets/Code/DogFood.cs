@@ -5,6 +5,7 @@ public class DogFood : MonoBehaviour {
 
 	public GameObject dogFoodShine, bowlPlayer;
 	public bool canFeedDog;
+	public AudioSource dogFoodSound, cannotSound;
 
 	private Player player;
 	private Bowl bowl;
@@ -35,9 +36,12 @@ public class DogFood : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0) && canFeedDog){
 			player.ChangeBowlSprite();
 
+			dogFoodSound.Play();
 			player.actions++;
 			juice.lvlNumber--;
 
+		} else if(Input.GetMouseButtonDown(0) && !canFeedDog) {
+			cannotSound.Play();
 		}
 
 	}
