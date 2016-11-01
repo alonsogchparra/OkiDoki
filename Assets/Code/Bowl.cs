@@ -10,6 +10,7 @@ public class Bowl : MonoBehaviour {
 	public Sprite bowlEmpty, bowlWater, bowlFood;
 	public bool canTakeIt;
 	public GameObject playerBowl;
+	public AudioSource cannotSound;
 
 	private SpriteRenderer spriteRender;
 	private Player player;
@@ -79,7 +80,13 @@ public class Bowl : MonoBehaviour {
 	void OnMouseOver(){
 		bowlShine.SetActive(true);
 
-		if(Input.GetMouseButtonDown(0) && canTakeIt && currentState == BowlState.Empty) {
+		if(Input.GetMouseButtonDown(0) && !canTakeIt) {
+
+			cannotSound.Play();
+			
+			
+		} else if(Input.GetMouseButtonDown(0) && canTakeIt && currentState == BowlState.Empty) {
+			
 			spriteRender.color = alphaHalfColor;
 			currentState = BowlState.SignEmpty;
 			playerBowl.SetActive(true);
