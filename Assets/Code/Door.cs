@@ -6,6 +6,7 @@ public class Door : MonoBehaviour {
 	public Sprite doorClosed, doorOpened;
 	public GameObject doorShine, winnerPanel; 
 	public bool canOpenIt;
+	public AudioSource cannotSound, openDoorSound;
 
 	[HideInInspector]
 	public SpriteRenderer spriteRender;
@@ -55,7 +56,13 @@ public class Door : MonoBehaviour {
 		if(spriteRender.sprite == doorClosed)
 			doorShine.SetActive(true);
 
-		if(Input.GetMouseButtonDown(0) && canOpenIt) {
+		if(Input.GetMouseButtonDown(0) && !canOpenIt) {
+
+			cannotSound.Play();
+			
+		} else if(Input.GetMouseButtonDown(0) && canOpenIt) {
+			
+			openDoorSound.Play();
 
 			ChangeSprite();
 			player.actions++;
