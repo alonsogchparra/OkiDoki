@@ -4,7 +4,7 @@ using System.Collections;
 public class Door : MonoBehaviour {
 
 	public Sprite doorClosed, doorOpened;
-	public GameObject doorShine, winnerPanel; 
+	public GameObject doorShine, winnerPanel, winnerSound; 
 	public bool canOpenIt;
 	public AudioSource cannotSound, openDoorSound;
 
@@ -75,6 +75,7 @@ public class Door : MonoBehaviour {
 		yield return new WaitForSeconds(sec);
 
 		winnerPanel.SetActive(true);
+		winnerSound.GetComponent<AudioSource>().Play();
 
 	}
 }
