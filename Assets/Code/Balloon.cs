@@ -30,6 +30,8 @@ public class Balloon : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		mouseOverType = MouseOverType.FloorSeven;
 	
 		player = GameObject.Find("Oki").GetComponent<Player>();
 		dog = GameObject.Find("Doki").GetComponent<Dog>();
@@ -265,6 +267,10 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonFive") {
+				cannotSound.Play();
+			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonSeven") {
+				cannotSound.Play();
 			}
 
 			break;
@@ -360,15 +366,19 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonSeven") {
+				cannotSound.Play();
+			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonTwo") {
+				cannotSound.Play();
 			}
 
 			break;
 		
 		case MouseOverType.FloorSeven:
-
+				
 			if(Input.GetMouseButtonDown(0) && !canTakeIt 
 				&& balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor) {
-				
+
 				cannotSound.Play();
 
 			}else if(Input.GetMouseButtonDown(0) && canTakeIt) {
@@ -449,6 +459,10 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonFive") {
+				cannotSound.Play();
+			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonTwo") {
+				cannotSound.Play();
 			}
 
 			break;
