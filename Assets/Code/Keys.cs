@@ -13,6 +13,10 @@ public class Keys : MonoBehaviour {
 	[HideInInspector]
 	public SpriteRenderer spriteRender;
 
+	public AudioSource keysSound, cannotSound;
+
+	public GameObject keys_aux;
+
 	private Dog dog;
 	private Player player;
 	// Use this for initialization
@@ -70,11 +74,17 @@ public class Keys : MonoBehaviour {
 			keysShine.SetActive(true);
 		}
 
+		if(Input.GetMouseButtonDown(0) && !canTakeIt) {
+			cannotSound.Play();
 
-		if(Input.GetMouseButtonDown(0) && canTakeIt) {
+		} else if(Input.GetMouseButtonDown(0) && canTakeIt) {
+
+			keysSound.Play();
 			
 			player.playerKeys.SetActive(true);
 			spriteRender.color = alphaZeroColor;
+			GetComponent<BoxCollider2D>().enabled = false;
+			keys_aux.SetActive(true);
 			player.actions++;
 
 		}
