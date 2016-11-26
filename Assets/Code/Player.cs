@@ -19,6 +19,7 @@ public class Player : MonoBehaviour {
 	public int actions = 0;
 	public Text gameOverActions, winnerActions;
 	public bool isMoving;
+	public AudioClip looseSound;
 
 	[HideInInspector]
 	public int direction = 0;
@@ -169,7 +170,6 @@ public class Player : MonoBehaviour {
 		yield return new WaitForSeconds(sec);
 
 		gameOverPanel.SetActive(true);
-
 	}
 		
 }
