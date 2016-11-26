@@ -25,6 +25,26 @@ public class Pause : MonoBehaviour {
 				g.GetComponent<BoxCollider2D>().enabled = true;
 			}
 
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Keys")) {
+				g.GetComponent<BoxCollider2D>().enabled = true;
+			}
+
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Bowl")) {
+				g.GetComponent<BoxCollider2D>().enabled = true;
+			}
+
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("BalloonSeven")) {
+				g.GetComponent<CircleCollider2D>().enabled = true;
+			}
+
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("BalloonFive")) {
+				g.GetComponent<CircleCollider2D>().enabled = true;
+			}
+
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("BalloonTwo")) {
+				g.GetComponent<CircleCollider2D>().enabled = true;
+			}
+
 		} else {
 			
 			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Floor")) {
@@ -34,6 +54,26 @@ public class Pause : MonoBehaviour {
 			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Touchable")) {
 				g.GetComponent<BoxCollider2D>().enabled = false;
 
+			}
+
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Keys")) {
+				g.GetComponent<BoxCollider2D>().enabled = false;
+			}
+
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Bowl")) {
+				g.GetComponent<BoxCollider2D>().enabled = false;
+			}
+
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("BalloonSeven")) {
+				g.GetComponent<CircleCollider2D>().enabled = false;
+			}
+
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("BalloonFive")) {
+				g.GetComponent<CircleCollider2D>().enabled = false;
+			}
+
+			foreach(GameObject g in GameObject.FindGameObjectsWithTag("BalloonTwo")) {
+				g.GetComponent<CircleCollider2D>().enabled = false;
 			}
 		}
 	
