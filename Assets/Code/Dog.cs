@@ -14,7 +14,9 @@ public class Dog : MonoBehaviour {
 
 	public int dogCount = 0;
 
-	public AudioSource yappingSound, eatingSound;
+	public AudioSource yappingSound, eatingSound, surprisedSound;
+
+	public AudioClip eating, surprised;
 
 	private Bowl bowl;
 	private Balloon balloon;
@@ -61,6 +63,7 @@ public class Dog : MonoBehaviour {
 
 		if(bowl.currentState == Bowl.BowlState.Food || bowl.currentState == Bowl.BowlState.Water) {
 			DogMoveToBowl();
+//			yappingSound.Play();
 		} else if (bowl.currentState == Bowl.BowlState.Empty && dogCount == 3) {
 			DogMoveToKeys();
 		
@@ -118,6 +121,11 @@ public class Dog : MonoBehaviour {
 			
 			spriteRender.sprite = dogEating;
 			currentState = DogState.Eating;
+
+//			eatingSound.Play();
+//			eatingSound.loop = true;
+
+//			AudioSource.PlayClipAtPoint(eating, target);
 
 		} else if (transform.position.x != target.x) {
 			
@@ -221,6 +229,7 @@ public class Dog : MonoBehaviour {
 
 		} else if (transform.position.x == target.x && keys.spriteRender.color == keys.alphaZeroColor) {
 			spriteRender.sprite = dogSurprise;
+//			surprisedSound.Play();
 
 		} else if (transform.position.x != target.x) {
 
@@ -229,6 +238,26 @@ public class Dog : MonoBehaviour {
 			currentState = DogState.Walking;
 		}
 
+	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+
+		var tgt_bowl = bowl.transform.position;
+		var tgt_keys = keys.transform.position;
+
+		if(other.tag == "Bowl") {
+			
+			AudioSource.PlayClipAtPoint(eating, tgt_bowl);
+
+		} else if(other.tag == "Keys") {
+
+			if(currentState == DogState.Surprise) {
+				AudioSource.PlayClipAtPoint(surprised, tgt_keys);
+			}
+			
+//			AudioSource.PlayClipAtPoint(surprised, tgt_keys);
+
+		}
 	}
 
 }
