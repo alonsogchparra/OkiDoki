@@ -37,27 +37,5 @@ public class PanelControl : MonoBehaviour {
 
 		}
 
-//		if(!frigdePanel.activeSelf) {
-//
-//			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Floor")) {
-//				g.GetComponent<PolygonCollider2D>().enabled = true;
-//			}
-//
-//			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Touchable")) {
-//				g.GetComponent<BoxCollider2D>().enabled = true;
-//			}
-//
-//		} else {
-//
-//			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Floor")) {
-//				g.GetComponent<PolygonCollider2D>().enabled = false;
-//			}
-//
-//			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Touchable")) {
-//				g.GetComponent<BoxCollider2D>().enabled = false;
-//
-//			}
-//		}
-
 	}
 }
