@@ -16,13 +16,14 @@ public class Dog : MonoBehaviour {
 
 	public AudioSource yappingSound, eatingSound, surprisedSound;
 
-	public AudioClip eating, surprised;
+	public AudioClip eating, surprised, yapping;
+
+	public bool surprisedPlayed = false;
+	public bool yappingPlayed = false;
 
 	private Bowl bowl;
 	private Balloon balloon;
 	private SpriteRenderer spriteRender;
-//	private Player player;
-//	private Floor floor;
 	private Keys keys;
 
 	// Use this for initialization
@@ -31,8 +32,6 @@ public class Dog : MonoBehaviour {
 		spriteRender = GetComponent<SpriteRenderer>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
 		balloon = GameObject.Find("Balloon Floor Seven").GetComponent<Balloon>();
-//		player = GameObject.Find("Oki").GetComponent<Player>();
-//		floor = GameObject.Find("Floor 1").GetComponent<Floor>();
 		keys = GameObject.Find("Keys").GetComponent<Keys>();
 
 		_isFacingRight = transform.localScale.x > 0;
@@ -44,8 +43,6 @@ public class Dog : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		//TODO: DEPENDE DONDE EL PERRO DEJE EL BALON, QUEDA ACTIVO PARA VOLVERLO AGARRAR
 
 		if(dogCount == 2 && currentState != DogState.Eating) {
 			
@@ -63,7 +60,7 @@ public class Dog : MonoBehaviour {
 
 		if(bowl.currentState == Bowl.BowlState.Food || bowl.currentState == Bowl.BowlState.Water) {
 			DogMoveToBowl();
-//			yappingSound.Play();
+
 		} else if (bowl.currentState == Bowl.BowlState.Empty && dogCount == 3) {
 			DogMoveToKeys();
 		
@@ -87,14 +84,6 @@ public class Dog : MonoBehaviour {
 			DogMoveToBalloon(balloon.balloonFloorTwo.transform.position);
 
 		}
-
-//		if(dogCount == 2 && currentState == DogState.HasBalloon) {
-//			BalloonToKeys(keys.transform.position);
-//		}
-
-//		if(dogCount == 2) {
-//			BalloonToKeys(keys.transform.position);
-//		}
 	}
 
 
@@ -104,8 +93,6 @@ public class Dog : MonoBehaviour {
 
 
 	void DogMoveToBowl() {
-
-		yappingSound.Play();
 
 		if(currentState == DogState.Walking) {
 			spriteRender.sprite = dogWalking;	
@@ -122,16 +109,19 @@ public class Dog : MonoBehaviour {
 			spriteRender.sprite = dogEating;
 			currentState = DogState.Eating;
 
-//			eatingSound.Play();
-//			eatingSound.loop = true;
-
-//			AudioSource.PlayClipAtPoint(eating, target);
+			yappingPlayed = false;
 
 		} else if (transform.position.x != target.x) {
 			
 			spriteRender.sprite = dogWalking;
 			transform.localScale = new Vector3(1f, 1f, 1f);
 			currentState = DogState.Walking;
+
+			if(!yappingPlayed) {
+				yappingSound.PlayOneShot(yapping);
+				yappingPlayed = true;
+			}
+
 		}
 	}
 
@@ -139,6 +129,11 @@ public class Dog : MonoBehaviour {
 
 		if(currentState == DogState.FindingBallon) {
 			spriteRender.sprite = dogFindingBallon;
+
+			if(!yappingPlayed) {
+				yappingSound.PlayOneShot(yapping);
+				yappingPlayed = true;
+			}
 		}
 			
 
@@ -154,6 +149,7 @@ public class Dog : MonoBehaviour {
 			
 			spriteRender.sprite = dogHasBalloon;
 			currentState = DogState.HasBalloon;
+			yappingPlayed = false;
 
 		} else if(transform.position.x != target.x) {
 			
@@ -164,8 +160,16 @@ public class Dog : MonoBehaviour {
 
 	void BalloonToKeys(Vector3 start) {
 
+		yappingSound.Play();
+
 		if(currentState == DogState.HasBalloon) {
 			spriteRender.sprite = dogFindingBallon;
+
+			if(!yappingPlayed) {
+				yappingSound.PlayOneShot(yapping);
+				yappingPlayed = true;
+			}
+
 		}
 
 		if(transform.position.x == balloon.balloonFloorTwo.transform.position.x) {
@@ -193,13 +197,20 @@ public class Dog : MonoBehaviour {
 
 			spriteRender.sprite = dogHasKeys;
 			currentState = DogState.HasKeys;
-			//			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
+
 			dogCount = 0;
+
+			yappingPlayed = false;
 
 		} else if(transform.position.x == keys.transform.position.x 
 			&& keys.spriteRender.color == keys.alphaZeroColor) {
 
 			spriteRender.sprite = dogSurprise;
+
+			if(!surprisedPlayed) {
+				surprisedSound.PlayOneShot(surprised);
+				surprisedPlayed = true;
+			}
 
 		} else if (transform.position.x != keys.transform.position.x) {
 
@@ -213,6 +224,11 @@ public class Dog : MonoBehaviour {
 
 		if(currentState == DogState.Walking) {
 			spriteRender.sprite = dogWalking;
+
+			if(!yappingPlayed) {
+				yappingSound.PlayOneShot(yapping);
+				yappingPlayed = true;
+			}
 		}
 
 		var target = keys.transform.position;
@@ -227,9 +243,17 @@ public class Dog : MonoBehaviour {
 			currentState = DogState.HasKeys;
 			dogCount = 0;
 
+			yappingPlayed = false;
+
 		} else if (transform.position.x == target.x && keys.spriteRender.color == keys.alphaZeroColor) {
 			spriteRender.sprite = dogSurprise;
-//			surprisedSound.Play();
+
+			if(!surprisedPlayed) {
+				surprisedSound.PlayOneShot(surprised);
+				surprisedPlayed = true;
+			}
+
+
 
 		} else if (transform.position.x != target.x) {
 
@@ -254,9 +278,6 @@ public class Dog : MonoBehaviour {
 			if(currentState == DogState.Surprise) {
 				AudioSource.PlayClipAtPoint(surprised, tgt_keys);
 			}
-			
-//			AudioSource.PlayClipAtPoint(surprised, tgt_keys);
-
 		}
 	}
 
