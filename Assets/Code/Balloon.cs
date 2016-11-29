@@ -25,6 +25,7 @@ public class Balloon : MonoBehaviour {
 	private Dog dog;
 	private Juice juice;
 	private Bowl bowl;
+	private Keys keys;
 //	private Floor floor;
 
 
@@ -37,7 +38,7 @@ public class Balloon : MonoBehaviour {
 		dog = GameObject.Find("Doki").GetComponent<Dog>();
 		juice = GameObject.Find("Juice").GetComponent<Juice>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
-//		floor = GameObject.Find("Floor 1").GetComponent<Floor>();
+		keys = GameObject.Find("Keys").GetComponent<Keys>();
 
 		spriteRender = GetComponent<SpriteRenderer>();
 		sr_ballooFloorTwo = gameObject.GetComponent<SpriteRenderer>();
@@ -60,27 +61,29 @@ public class Balloon : MonoBehaviour {
 
 	void Update () {
 
-//		if(player.transform.position.x == 7.14f 
-//			|| player.transform.position.x == 0.36f 
-//			|| player.transform.position.x == -4.47f) {
-//
-//			canTakeIt = true;
-//		} else {
-//			canTakeIt = false;
-//		}
-
-
 		if(player.transform.position.x == 7.14f 
 			&& balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor 
 			&& !bowl.playerBowl.activeSelf) {
 			canTakeIt = true;
-		}else if(player.transform.position.x == 0.36f 
+		} else if(player.transform.position.x == 0.36f 
 			&& balloonFloorFive.GetComponent<SpriteRenderer>().color == alphaFullColor
 			&& !bowl.playerBowl.activeSelf) {
 			canTakeIt = true;
 		} else if (player.transform.position.x == -4.47f 
 			&& balloonFloorTwo.GetComponent<SpriteRenderer>().color == alphaFullColor 
 			&& currentState == BallonState.Normal && !bowl.playerBowl.activeSelf) {
+			canTakeIt = true;
+		} if (player.transform.position.x == -4.47f 
+			&& balloonFloorTwo.GetComponent<SpriteRenderer>().color == alphaFullColor 
+			&& currentState == BallonState.Normal && !keys.playerKeys.activeSelf) {
+			canTakeIt = true;
+		} else if (player.transform.position.x == 0.36f 
+			&& balloonFloorFive.GetComponent<SpriteRenderer>().color == alphaFullColor 
+			&& currentState == BallonState.Normal && !keys.playerKeys.activeSelf) {
+			canTakeIt = true;
+		} else if (player.transform.position.x == 7.14f 
+			&& balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor 
+			&& currentState == BallonState.Normal && !keys.playerKeys.activeSelf) {
 			canTakeIt = true;
 		} else {
 			canTakeIt = false;
@@ -471,21 +474,6 @@ public class Balloon : MonoBehaviour {
 			break;
 
 		}
-
-//		if(Input.GetMouseButtonDown(0) && canTakeIt) {
-//			
-//			playerBalloon.SetActive(true);
-//			spriteRender.color = alphaHalfColor;
-//			currentState = BallonState.Picked;
-//
-//		}else if(Input.GetMouseButtonDown(0) && currentState == BallonState.Picked) {
-//			
-//			playerBalloon.SetActive(false);
-//			spriteRender.color = alphaFullColor;
-//			currentState = BallonState.Wanted;
-//
-//		}
-
 	}
 
 	void OnMouseExit(){
