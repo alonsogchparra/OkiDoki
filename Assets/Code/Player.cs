@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 	public bool isMoving;
 	public AudioClip looseSound;
 
+	public GameObject musicBg;
+
 	[HideInInspector]
 	public int direction = 0;
 	[HideInInspector]
@@ -32,7 +34,7 @@ public class Player : MonoBehaviour {
 	private Dog dog;
 	private Floor floor;
 	private Text txtActions;
-	private float sec = 2f;
+	private float sec = 1f;
 
 	// Use this for initialization
 	void Start () {
@@ -165,11 +167,13 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	IEnumerator GameOver() {
+	public IEnumerator GameOver() {
 
 		yield return new WaitForSeconds(sec);
 
+		musicBg.SetActive(false);
 		gameOverPanel.SetActive(true);
+
 	}
 		
 }
