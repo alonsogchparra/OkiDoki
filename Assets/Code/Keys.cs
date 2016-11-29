@@ -7,6 +7,8 @@ public class Keys : MonoBehaviour {
 	public Sprite sprite;
 	public bool canTakeIt;
 
+	public GameObject playerKeys;
+
 	[HideInInspector]
 	public Color alphaFullColor, alphaZeroColor;
 
@@ -19,11 +21,14 @@ public class Keys : MonoBehaviour {
 
 	private Dog dog;
 	private Player player;
+	private Juice juice;
+
 	// Use this for initialization
 	void Start () {
 
 		dog = GameObject.Find("Doki").GetComponent<Dog>();
 		player = GameObject.Find("Oki").GetComponent<Player>();
+		juice = GameObject.Find("Juice").GetComponent<Juice>();
 
 		spriteRender = GetComponent<SpriteRenderer>();
 
@@ -86,6 +91,7 @@ public class Keys : MonoBehaviour {
 			GetComponent<BoxCollider2D>().enabled = false;
 			keys_aux.SetActive(true);
 			player.actions++;
+			juice.lvlNumber--;
 
 		}
 	}
