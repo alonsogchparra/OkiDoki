@@ -19,6 +19,7 @@ public class Fridge : MonoBehaviour {
 	private float secs = 1f;
 	private Bowl bowl;
 	private Color alphaHalfColor, alphaFullColor;
+	private Juice juice;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +27,7 @@ public class Fridge : MonoBehaviour {
 		spriteRender = GetComponent<SpriteRenderer>();
 		player = GameObject.Find("Oki").GetComponent<Player>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
+		juice = GameObject.Find("Juice").GetComponent<Juice>();
 	
 		if(spriteRender == null)
 			spriteRender.sprite = fridgeClosed;
@@ -76,7 +78,15 @@ public void ChangeSprite(){
 
 			ChangeSprite();
 			player.actions++;
-			StartCoroutine(FridgePanelOpened());
+			juice.lvlNumber--;
+
+			if(juice.lvlNumber == 0) {
+				player.StartCoroutine(player.GameOver());
+			} else {
+				StartCoroutine(FridgePanelOpened());
+			}
+
+
 
 		} else if (Input.GetMouseButtonDown(0) && !canOpenIt) {
 			cannotSound.Play();
