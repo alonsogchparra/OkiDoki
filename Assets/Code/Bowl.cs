@@ -26,8 +26,6 @@ public class Bowl : MonoBehaviour {
 		juice = GameObject.Find("Juice").GetComponent<Juice>();
 		fridge = GameObject.Find("Frigde").GetComponent<Fridge>();
 
-//		playerBowl = GameObject.Find("Oki Bowl");
-
 		spriteRender = GetComponent<SpriteRenderer>();
 
 		if(spriteRender == null || currentState == BowlState.Empty)
@@ -43,7 +41,7 @@ public class Bowl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(player.transform.position.x == 7.14f && !player.playerBalloon.activeSelf) {
+		if( player.transform.position.x == 7.14f && !player.playerBalloon.activeSelf ) {
 			canTakeIt = true;
 		} else {
 			canTakeIt = false;
@@ -84,6 +82,9 @@ public class Bowl : MonoBehaviour {
 
 			cannotSound.Play();
 			
+		} else if(Input.GetMouseButtonDown(0) && player.playerKeys.activeSelf) {
+
+			cannotSound.Play();
 			
 		} else if(Input.GetMouseButtonDown(0) && canTakeIt && currentState == BowlState.Empty) {
 			
