@@ -8,11 +8,13 @@ public class Door : MonoBehaviour {
 	public bool canOpenIt;
 	public AudioSource cannotSound, openDoorSound;
 
+	public GameObject musicBg;
+
 	[HideInInspector]
 	public SpriteRenderer spriteRender;
 
 	private Player player;
-	private float sec = 3f;
+	private float sec = 1f;
 
 	// Use this for initialization
 	void Start () {
@@ -75,6 +77,7 @@ public class Door : MonoBehaviour {
 		yield return new WaitForSeconds(sec);
 
 		winnerPanel.SetActive(true);
+		musicBg.SetActive(false);
 		winnerSound.GetComponent<AudioSource>().Play();
 
 	}
