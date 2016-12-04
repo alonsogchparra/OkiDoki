@@ -26,7 +26,6 @@ public class Balloon : MonoBehaviour {
 	private Juice juice;
 	private Bowl bowl;
 	private Keys keys;
-//	private Floor floor;
 
 
 	// Use this for initialization
@@ -95,6 +94,27 @@ public class Balloon : MonoBehaviour {
 			mouseOverType = MouseOverType.FloorFive;
 		} else if (player.transform.position.x == 7.14f) {
 			mouseOverType = MouseOverType.FloorSeven;
+		}
+
+		if(dog.currentState == Dog.DogState.HasBalloon 
+			&& dog.transform.position.x == balloonFloorSeven.transform.position.x) {
+
+			balloonFloorFive.GetComponent<CircleCollider2D>().enabled = false;
+			balloonFloorTwo.GetComponent<CircleCollider2D>().enabled = false;
+
+		} else if (dog.currentState == Dog.DogState.HasBalloon 
+			&& dog.transform.position.x == balloonFloorFive.transform.position.x) {
+
+			balloonFloorTwo.GetComponent<CircleCollider2D>().enabled = false;
+			balloonFloorSeven.GetComponent<CircleCollider2D>().enabled = false;
+
+
+		} else if (dog.currentState == Dog.DogState.HasBalloon 
+			&& dog.transform.position.x == balloonFloorTwo.transform.position.x) {
+
+			balloonFloorSeven.GetComponent<CircleCollider2D>().enabled = false;
+			balloonFloorFive.GetComponent<CircleCollider2D>().enabled = false;
+
 		}
 
 		switch(currentState) {
@@ -178,7 +198,11 @@ public class Balloon : MonoBehaviour {
 
 		case MouseOverType.FloorTwo:
 
-			if(Input.GetMouseButtonDown(0) && !canTakeIt 
+			if(Input.GetMouseButtonDown(0) && bowl.playerBowl.activeSelf ) {
+
+				cannotSound.Play();
+
+			} else if(Input.GetMouseButtonDown(0) && !canTakeIt 
 				&& balloonFloorTwo.GetComponent<SpriteRenderer>().color == alphaFullColor) {
 				
 				cannotSound.Play();
@@ -280,7 +304,11 @@ public class Balloon : MonoBehaviour {
 
 		case MouseOverType.FloorFive:
 
-			if(Input.GetMouseButtonDown(0) && !canTakeIt 
+			if(Input.GetMouseButtonDown(0) && bowl.playerBowl.activeSelf ) {
+
+				cannotSound.Play();
+
+			} else if(Input.GetMouseButtonDown(0) && !canTakeIt 
 				&& balloonFloorFive.GetComponent<SpriteRenderer>().color == alphaFullColor) {
 				
 				cannotSound.Play();
@@ -378,8 +406,12 @@ public class Balloon : MonoBehaviour {
 			break;
 		
 		case MouseOverType.FloorSeven:
-				
-			if(Input.GetMouseButtonDown(0) && !canTakeIt 
+
+			if(Input.GetMouseButtonDown(0) && bowl.playerBowl.activeSelf ) {
+
+				cannotSound.Play();
+
+			} else if(Input.GetMouseButtonDown(0) && !canTakeIt 
 				&& balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor) {
 
 				cannotSound.Play();
