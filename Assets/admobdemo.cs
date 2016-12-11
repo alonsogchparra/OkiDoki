@@ -25,7 +25,10 @@ public class admobdemo : MonoBehaviour {
             ad.rewardedVideoEventHandler += onRewardedVideoEvent;
             ad.nativeBannerEventHandler += onNativeBannerEvent;
             ad.initAdmob("ca-app-pub-3940256099942544/2934735716", "ca-app-pub-3940256099942544/4411468910");
-            //   ad.setTesting(true);
+        //   ad.setTesting(true);
+            ad.setGender(AdmobGender.MALE);
+            string[] keywords = { "game","crash","male game"};
+            ad.setKeywords(keywords);
             Debug.Log("admob inited -------------");
         
     }
@@ -52,13 +55,12 @@ public class admobdemo : MonoBehaviour {
             else
             {
             	
-            		//ad.loadRewardedVideo("ca-app-pub-3120877784109998/4714341465");
-                ad.loadRewardedVideo("ca-app-pub-4622924889224894/8984406965");
+                ad.loadRewardedVideo("ca-app-pub-3940256099942544/xxxxxxxxxxxxxxxx");
             }
         }
         if (GUI.Button(new Rect(0, 100, 100, 60), "showbanner"))
         {
-            Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
+            Admob.Instance().showBannerRelative(AdSize.SmartBanner, AdPosition.BOTTOM_CENTER, 0);
         }
         if (GUI.Button(new Rect(120, 100, 100, 60), "showbannerABS"))
         {
@@ -68,8 +70,8 @@ public class admobdemo : MonoBehaviour {
         {
             Admob.Instance().removeBanner();
         }
-        string nativeBannerID = "ca-app-pub-6908989844804937/5541215009";//
-       // string nativeBannerID = "ca-app-pub-3940256099942544/2562852117";//google
+       
+        string nativeBannerID = "ca-app-pub-3940256099942544/2562852117";//google
         if (GUI.Button(new Rect(0, 200, 100, 60), "showNative"))
         {
             
