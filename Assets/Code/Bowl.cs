@@ -114,6 +114,7 @@ public class Bowl : MonoBehaviour {
 			player.actions++;
 			juice.lvlNumber--;
 
+
 		} else if(Input.GetMouseButtonDown(0) && currentState == BowlState.SignWater){
 
 			spriteRender.color = alphaFullColor;
