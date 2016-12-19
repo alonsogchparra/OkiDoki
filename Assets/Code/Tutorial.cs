@@ -8,6 +8,9 @@ public class Tutorial : MonoBehaviour {
 	public Sprite spriteGetIt;
 
 	public Image imageExplain, imageDraw, imageCancel;
+
+	public Button btnPrevious, btnNext;
+
 	private int i = 0;
 
 	// Use this for initialization
@@ -27,20 +30,37 @@ public class Tutorial : MonoBehaviour {
 		if(i < spriteDraw.Length) {
 			i++;
 
-			if(i == spriteDraw.Length - 1)
+			if(i == spriteDraw.Length - 1) {
+				btnNext.interactable = false;
 				imageCancel.sprite = spriteGetIt;
+			}
+				
 
 			if(i == spriteDraw.Length) {
 				i = 0;
+			}
+
+			if(i == 0) {
+				btnPrevious.interactable = false;
+			} else {
+				btnPrevious.interactable = true;
 			}
 		}
 	}
 
 	public void ButtonPrevious() {
 		if(i > 0) {
+			
 			i--;
-		} else if(i <= 0) {
-			i = spriteDraw.Length - 1;
+			btnPrevious.interactable = true;
+			btnNext.interactable = true;
+
+		}
+
+		if(i == 0) {
+			
+			btnPrevious.interactable = false;
+//			i = spriteDraw.Length - 1;
 		}
 		
 	}
