@@ -7,7 +7,7 @@ public class Bowl : MonoBehaviour {
 
 	public BowlState currentState = BowlState.Empty;
 	public GameObject bowlShine;
-	public Sprite bowlEmpty, bowlWater, bowlFood;
+	public Sprite bowlEmpty, bowlWater, bowlFood, spriteShine, spriteCannot;
 	public bool canTakeIt;
 	public GameObject playerBowl;
 	public AudioSource cannotSound;
@@ -79,11 +79,13 @@ public class Bowl : MonoBehaviour {
 		bowlShine.SetActive(true);
 
 		if(Input.GetMouseButtonDown(0) && !canTakeIt) {
-
+			
+			bowlShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 			cannotSound.Play();
 			
 		} else if(Input.GetMouseButtonDown(0) && player.playerKeys.activeSelf) {
-
+			
+			bowlShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 			cannotSound.Play();
 			
 		} else if(Input.GetMouseButtonDown(0) && canTakeIt && currentState == BowlState.Empty) {
@@ -131,6 +133,9 @@ public class Bowl : MonoBehaviour {
 	}
 
 	void OnMouseExit(){
+		
 		bowlShine.SetActive(false);
+		bowlShine.GetComponent<SpriteRenderer>().sprite = spriteShine;
+
 	}
 }
