@@ -4,14 +4,18 @@ using UnityEngine.UI;
 
 public class Fridge : MonoBehaviour {
 
-	public Sprite fridgeOpened, fridgeClosed, spriteBowlWater, spriteBowlEmpty, spriteBowlFood;
-	public GameObject fridgeShine, frigdePanel, servingWater;
+	public Sprite fridgeOpened, fridgeClosed, spriteBowlWater, spriteBowlEmpty, spriteBowlFood,
+	spriteShine,spriteCannot;
+
+	public GameObject fridgeShine, frigdePanel, servingWater, waterShine;
 	public bool canOpenIt, canServeWater;
 	public AudioSource fridgeSound, cannotSound; //Fridge
 	public AudioSource waterSound; //Water
 
 
 	public Image imgBowl;
+
+	public Sprite spriteWaterShine, spriteWaterCannot;
 
 	private SpriteRenderer spriteRender;
 	private Player player;
@@ -117,12 +121,19 @@ public void ChangeSprite(){
 
 
 		} else if (Input.GetMouseButtonDown(0) && !canOpenIt) {
+			
+			fridgeShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 			cannotSound.Play();
+
 		}
 	}
 
-	void OnMouseExit(){
+	void OnMouseExit() {
+		
 		fridgeShine.SetActive(false);
+		fridgeShine.GetComponent<SpriteRenderer>().sprite = spriteShine;
+		waterShine.GetComponent<Image>().sprite = spriteWaterShine;
+
 	}
 
 	IEnumerator FridgePanelOpened() {
@@ -152,6 +163,7 @@ public void ChangeSprite(){
 		} else {
 
 			cannotSound.Play();
+			waterShine.GetComponent<Image>().sprite = spriteWaterCannot;
 
 		}
 	}
