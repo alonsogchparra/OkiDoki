@@ -149,7 +149,8 @@ public void ChangeSprite(){
 
 	public void FillBowlWater() {
 
-		if(bowl.playerBowl.activeSelf && canServeWater) {
+		if(bowl.playerBowl.activeSelf && canServeWater 
+			&& bowl.playerBowl.GetComponent<SpriteRenderer>().sprite == player.bowlEmpty) {
 
 			waterSound.Play();
 
