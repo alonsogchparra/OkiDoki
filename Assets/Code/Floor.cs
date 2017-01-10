@@ -118,6 +118,9 @@ public class Floor : MonoBehaviour {
 
 				juice.lvlNumber--;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 				if(transform.position.x < player.transform.position.x) {
 					player.direction = -1;
 
@@ -146,7 +149,7 @@ public class Floor : MonoBehaviour {
 
 			}
 				
-		}else {
+		} else {
 			return;
 		}
 	}
