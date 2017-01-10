@@ -12,9 +12,13 @@ public class Bowl : MonoBehaviour {
 	public GameObject playerBowl;
 	public AudioSource cannotSound;
 
-	private SpriteRenderer spriteRender;
+	[HideInInspector]
+	public SpriteRenderer spriteRender;
+
+	[HideInInspector]
+	public Color alphaHalfColor, alphaFullColor;
+
 	private Player player;
-	private Color alphaHalfColor, alphaFullColor;
 	private Juice juice;
 	private Fridge fridge;
 
@@ -97,6 +101,9 @@ public class Bowl : MonoBehaviour {
 			player.actions++;
 			juice.lvlNumber--;
 
+			if (juice.lvlNumber < 1)
+				StartCoroutine(player.GameOver());
+
 		} else if(Input.GetMouseButtonDown(0) 
 			&& canTakeIt && playerBowl.activeSelf && currentState == BowlState.SignEmpty) {
 
@@ -107,6 +114,9 @@ public class Bowl : MonoBehaviour {
 			player.actions++;
 			juice.lvlNumber--;
 
+			if (juice.lvlNumber < 1)
+				StartCoroutine(player.GameOver());
+
 		} else if (Input.GetMouseButtonDown(0) && currentState == BowlState.SignFood) {
 
 			spriteRender.color = alphaFullColor;
@@ -115,6 +125,9 @@ public class Bowl : MonoBehaviour {
 
 			player.actions++;
 			juice.lvlNumber--;
+
+			if (juice.lvlNumber < 1)
+				StartCoroutine(player.GameOver());
 
 
 		} else if(Input.GetMouseButtonDown(0) && currentState == BowlState.SignWater){
@@ -127,6 +140,9 @@ public class Bowl : MonoBehaviour {
 			juice.lvlNumber--;
 
 			fridge.imgBowl.sprite = fridge.spriteBowlEmpty;
+
+			if (juice.lvlNumber < 1)
+				StartCoroutine(player.GameOver());
 
 		}
 
