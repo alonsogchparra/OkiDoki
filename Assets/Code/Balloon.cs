@@ -242,6 +242,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			}else if(Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonSeven") {
 
@@ -259,6 +262,9 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
 
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonFive") {
@@ -279,6 +285,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonTwo") {
 
@@ -297,6 +306,9 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
 
 			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonFive") {
 				
@@ -363,6 +375,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			}else if(Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonSeven") {
 
@@ -379,6 +394,9 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
 
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonFive") {
@@ -399,6 +417,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonTwo") {
 
@@ -416,6 +437,10 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonSeven") {
 				
 				shineFloorSeven.GetComponent<SpriteRenderer>().sprite = spriteCannot;
@@ -473,6 +498,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			}else if(Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonSeven") {
 
@@ -490,6 +518,9 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
 
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonFive") {
@@ -510,6 +541,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonTwo") {
 
@@ -528,6 +562,9 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
 
 			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonFive") {
 				
