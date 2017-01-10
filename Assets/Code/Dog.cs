@@ -21,9 +21,11 @@ public class Dog : MonoBehaviour {
 	public bool surprisedPlayed = false;
 	public bool yappingPlayed = false;
 
+	[HideInInspector]
+	public SpriteRenderer spriteRender;
+
 	private Bowl bowl;
 	private Balloon balloon;
-	private SpriteRenderer spriteRender;
 	private Keys keys;
 
 	// Use this for initialization
