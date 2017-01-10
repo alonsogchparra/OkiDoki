@@ -21,7 +21,7 @@ public class Player : MonoBehaviour {
 	public bool isMoving;
 	public AudioClip looseSound;
 
-	public GameObject musicBg;
+	public GameObject musicBg, looserSound;
 
 	[HideInInspector]
 	public int direction = 0;
@@ -91,7 +91,7 @@ public class Player : MonoBehaviour {
 		case 0:
 			currentState = PlayerState.Sleepy;
 			spriteRender.sprite = okiSleepy;
-			StartCoroutine(GameOver());
+//			StartCoroutine(GameOver());
 			break;
 
 		default:
@@ -173,6 +173,7 @@ public class Player : MonoBehaviour {
 
 		musicBg.SetActive(false);
 		gameOverPanel.SetActive(true);
+		looserSound.GetComponent<AudioSource>().Play();
 
 	}
 		
