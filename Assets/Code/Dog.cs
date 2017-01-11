@@ -249,6 +249,7 @@ public class Dog : MonoBehaviour {
 
 		} else if (transform.position.x == target.x && keys.spriteRender.color == keys.alphaZeroColor) {
 			spriteRender.sprite = dogSurprise;
+			dogCount = 0;
 
 			if(!surprisedPlayed) {
 				surprisedSound.PlayOneShot(surprised);
