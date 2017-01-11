@@ -45,7 +45,6 @@ public class Restart : MonoBehaviour {
 	public void Kitchen () {
 
 		count++;
-		print(count);
 
 		if (count%3 == 0)
 			adManager.ShowVideo();
@@ -53,6 +52,7 @@ public class Restart : MonoBehaviour {
 		player.transform.position = posPlayer;
 		player.currentPosition = posPlayer;
 		player.actions = 0;
+		player.direction = 1;
 
 		juice.lvlNumber = 5;
 
@@ -91,6 +91,7 @@ public class Restart : MonoBehaviour {
 		dog.currentState = Dog.DogState.HasKeys;
 		dog.spriteRender.sprite = dog.dogHasKeys;
 		dog.spriteRender.sortingOrder = 30;
+		dog.transform.localScale = new Vector3(1f,1f,1f);
 
 		keys.spriteRender.color = keys.alphaZeroColor;
 		playerKeys.SetActive(false);
@@ -100,9 +101,11 @@ public class Restart : MonoBehaviour {
 	}
 
 	public void WithGameOver () {
+		
 		player.transform.position = posPlayer;
 		player.currentPosition = posPlayer;
 		player.actions = 0;
+		player.direction = 1;
 
 		juice.lvlNumber = 5;
 
@@ -137,11 +140,12 @@ public class Restart : MonoBehaviour {
 		balloonFive.shineFloorFive.SetActive(false);
 		balloonSeven.shineFloorSeven.SetActive(false);
 
-
+		dog.dogCount = 0;
 		dog.transform.position = posDog;
 		dog.currentState = Dog.DogState.HasKeys;
 		dog.spriteRender.sprite = dog.dogHasKeys;
 		dog.spriteRender.sortingOrder = 30;
+		dog.transform.localScale = new Vector3(1f,1f,1f);
 
 		keys.spriteRender.color = keys.alphaZeroColor;
 		playerKeys.SetActive(false);
@@ -185,6 +189,7 @@ public class Restart : MonoBehaviour {
 		player.transform.position = posPlayer;
 		player.currentPosition = posPlayer;
 		player.actions = 0;
+		player.direction = 1;
 
 		juice.lvlNumber = 5;
 
@@ -214,6 +219,7 @@ public class Restart : MonoBehaviour {
 		dog.currentState = Dog.DogState.HasKeys;
 		dog.spriteRender.sprite = dog.dogHasKeys;
 		dog.spriteRender.sortingOrder = 30;
+		dog.transform.localScale = new Vector3(1f,1f,1f);
 
 		keys.spriteRender.color = keys.alphaZeroColor;
 		playerKeys.SetActive(false);
