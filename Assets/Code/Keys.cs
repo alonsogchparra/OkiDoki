@@ -4,7 +4,7 @@ using System.Collections;
 public class Keys : MonoBehaviour {
 
 	public GameObject keysShine;
-	public Sprite sprite;
+	public Sprite sprite, spriteShine, spriteCannot;
 	public bool canTakeIt;
 
 	public GameObject playerKeys;
@@ -73,16 +73,18 @@ public class Keys : MonoBehaviour {
 	
 	}
 
-	void OnMouseOver(){
+	void OnMouseOver() {
 		
 		if(spriteRender.color == alphaFullColor) {
 			keysShine.SetActive(true);
 		}
 
 		if(Input.GetMouseButtonDown(0) && !canTakeIt) {
+
+			keysShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 			cannotSound.Play();
 
-		} else if(Input.GetMouseButtonDown(0) && canTakeIt) {
+		} else if(Input.GetMouseButtonDown(0) && canTakeIt && spriteRender.color == alphaFullColor) {
 
 			keysSound.Play();
 			
@@ -96,7 +98,10 @@ public class Keys : MonoBehaviour {
 		}
 	}
 
-	void OnMouseExit(){
+	void OnMouseExit() {
+		
 		keysShine.SetActive(false);
+		keysShine.GetComponent<SpriteRenderer>().sprite = spriteShine;
+
 	}
 }

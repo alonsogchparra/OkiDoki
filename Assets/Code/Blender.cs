@@ -6,6 +6,8 @@ public class Blender : MonoBehaviour {
 	public GameObject blenderShine;
 	public AudioSource blenderSound, cannotSound;
 
+	public Sprite spriteShine, spriteCannot;
+
 	private Juice juice;
 	private Player player;
 
@@ -33,7 +35,8 @@ public class Blender : MonoBehaviour {
 			player.currentPosition = player.transform.position;
 			player.actions++;
 
-		} else if(Input.GetMouseButtonDown(0) && player.transform.position.x != -2.85f){
+		} else if(Input.GetMouseButtonDown(0) && player.transform.position.x != -2.85f) {
+			blenderShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 			cannotSound.Play();
 
 		} else {
@@ -43,6 +46,7 @@ public class Blender : MonoBehaviour {
 	}
 
 	void OnMouseExit(){
+		blenderShine.GetComponent<SpriteRenderer>().sprite = spriteShine;
 		blenderShine.SetActive(false);
 	}
 		

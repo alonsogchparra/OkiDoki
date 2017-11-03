@@ -7,6 +7,9 @@ public class DogFood : MonoBehaviour {
 	public bool canFeedDog;
 	public AudioSource dogFoodSound, cannotSound;
 
+	public Sprite spriteShine, spriteCannot;
+
+
 	private Player player;
 	private Bowl bowl;
 	private Juice juice;
@@ -17,6 +20,7 @@ public class DogFood : MonoBehaviour {
 		player = GameObject.Find("Oki").GetComponent<Player>();
 		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
 		juice = GameObject.Find("Juice").GetComponent<Juice>();
+
 	}
 	
 	// Update is called once per frame
@@ -33,7 +37,21 @@ public class DogFood : MonoBehaviour {
 	void OnMouseOver(){
 		dogFoodShine.SetActive(true);
 
-		if(Input.GetMouseButtonDown(0) && canFeedDog){
+		if(Input.GetMouseButtonDown(0) && canFeedDog 
+			&& bowl.playerBowl.GetComponent<SpriteRenderer>().sprite == player.bowlFood) {
+			
+			dogFoodShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+			cannotSound.Play();
+
+		} else if(Input.GetMouseButtonDown(0) && canFeedDog 
+			&& bowl.playerBowl.GetComponent<SpriteRenderer>().sprite == player.bowlWater) {
+
+			dogFoodShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+			cannotSound.Play();
+
+		} else if(Input.GetMouseButtonDown(0) && canFeedDog 
+			&& bowl.playerBowl.GetComponent<SpriteRenderer>().sprite == player.bowlEmpty) {
+
 			player.ChangeBowlSprite();
 
 			dogFoodSound.Play();
@@ -41,12 +59,18 @@ public class DogFood : MonoBehaviour {
 			juice.lvlNumber--;
 
 		} else if(Input.GetMouseButtonDown(0) && !canFeedDog) {
+			
+			dogFoodShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 			cannotSound.Play();
+
 		}
 
 	}
 
 	void OnMouseExit(){
+		
+		dogFoodShine.GetComponent<SpriteRenderer>().sprite = spriteShine;
 		dogFoodShine.SetActive(false);
+
 	}
 }

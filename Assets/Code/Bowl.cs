@@ -7,14 +7,18 @@ public class Bowl : MonoBehaviour {
 
 	public BowlState currentState = BowlState.Empty;
 	public GameObject bowlShine;
-	public Sprite bowlEmpty, bowlWater, bowlFood;
+	public Sprite bowlEmpty, bowlWater, bowlFood, spriteShine, spriteCannot;
 	public bool canTakeIt;
 	public GameObject playerBowl;
 	public AudioSource cannotSound;
 
-	private SpriteRenderer spriteRender;
+	[HideInInspector]
+	public SpriteRenderer spriteRender;
+
+	[HideInInspector]
+	public Color alphaHalfColor, alphaFullColor;
+
 	private Player player;
-	private Color alphaHalfColor, alphaFullColor;
 	private Juice juice;
 	private Fridge fridge;
 
@@ -79,11 +83,13 @@ public class Bowl : MonoBehaviour {
 		bowlShine.SetActive(true);
 
 		if(Input.GetMouseButtonDown(0) && !canTakeIt) {
-
+			
+			bowlShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 			cannotSound.Play();
 			
 		} else if(Input.GetMouseButtonDown(0) && player.playerKeys.activeSelf) {
-
+			
+			bowlShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 			cannotSound.Play();
 			
 		} else if(Input.GetMouseButtonDown(0) && canTakeIt && currentState == BowlState.Empty) {
@@ -95,6 +101,9 @@ public class Bowl : MonoBehaviour {
 			player.actions++;
 			juice.lvlNumber--;
 
+			if (juice.lvlNumber < 1)
+				StartCoroutine(player.GameOver());
+
 		} else if(Input.GetMouseButtonDown(0) 
 			&& canTakeIt && playerBowl.activeSelf && currentState == BowlState.SignEmpty) {
 
@@ -105,6 +114,9 @@ public class Bowl : MonoBehaviour {
 			player.actions++;
 			juice.lvlNumber--;
 
+			if (juice.lvlNumber < 1)
+				StartCoroutine(player.GameOver());
+
 		} else if (Input.GetMouseButtonDown(0) && currentState == BowlState.SignFood) {
 
 			spriteRender.color = alphaFullColor;
@@ -113,6 +125,10 @@ public class Bowl : MonoBehaviour {
 
 			player.actions++;
 			juice.lvlNumber--;
+
+			if (juice.lvlNumber < 1)
+				StartCoroutine(player.GameOver());
+
 
 		} else if(Input.GetMouseButtonDown(0) && currentState == BowlState.SignWater){
 
@@ -125,11 +141,17 @@ public class Bowl : MonoBehaviour {
 
 			fridge.imgBowl.sprite = fridge.spriteBowlEmpty;
 
+			if (juice.lvlNumber < 1)
+				StartCoroutine(player.GameOver());
+
 		}
 
 	}
 
 	void OnMouseExit(){
+		
 		bowlShine.SetActive(false);
+		bowlShine.GetComponent<SpriteRenderer>().sprite = spriteShine;
+
 	}
 }

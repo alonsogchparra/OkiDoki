@@ -4,14 +4,18 @@ using UnityEngine.UI;
 
 public class Fridge : MonoBehaviour {
 
-	public Sprite fridgeOpened, fridgeClosed, spriteBowlWater, spriteBowlEmpty;
-	public GameObject fridgeShine, frigdePanel, servingWater;
+	public Sprite fridgeOpened, fridgeClosed, spriteBowlWater, spriteBowlEmpty, spriteBowlFood,
+	spriteShine,spriteCannot;
+
+	public GameObject fridgeShine, frigdePanel, servingWater, waterShine;
 	public bool canOpenIt, canServeWater;
 	public AudioSource fridgeSound, cannotSound; //Fridge
 	public AudioSource waterSound; //Water
 
 
 	public Image imgBowl;
+
+	public Sprite spriteWaterShine, spriteWaterCannot;
 
 	private SpriteRenderer spriteRender;
 	private Player player;
@@ -23,6 +27,8 @@ public class Fridge : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		canServeWater = false;
 
 		spriteRender = GetComponent<SpriteRenderer>();
 		player = GameObject.Find("Oki").GetComponent<Player>();
@@ -55,6 +61,32 @@ public class Fridge : MonoBehaviour {
 		} else {
 
 			imgBowl.color = alphaHalfColor;
+		}
+
+		if(bowl.playerBowl.activeSelf 
+			&& bowl.playerBowl.GetComponent<SpriteRenderer>().sprite == player.bowlFood) {
+
+			canServeWater = false;
+
+		} else if(bowl.playerBowl.activeSelf 
+			&& bowl.playerBowl.GetComponent<SpriteRenderer>().sprite != player.bowlFood) {
+
+			canServeWater = true;
+
+		}
+
+		if(bowl.currentState == Bowl.BowlState.SignFood) {
+
+			imgBowl.sprite = spriteBowlFood;
+			
+		} else if (bowl.currentState == Bowl.BowlState.SignWater) {
+
+			imgBowl.sprite = spriteBowlWater;
+
+		} else {
+
+			imgBowl.sprite = spriteBowlEmpty;
+
 		}
 	
 	}
@@ -89,12 +121,19 @@ public void ChangeSprite(){
 
 
 		} else if (Input.GetMouseButtonDown(0) && !canOpenIt) {
+			
+			fridgeShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 			cannotSound.Play();
+
 		}
 	}
 
-	void OnMouseExit(){
+	void OnMouseExit() {
+		
 		fridgeShine.SetActive(false);
+		fridgeShine.GetComponent<SpriteRenderer>().sprite = spriteShine;
+		waterShine.GetComponent<Image>().sprite = spriteWaterShine;
+
 	}
 
 	IEnumerator FridgePanelOpened() {
@@ -102,7 +141,7 @@ public void ChangeSprite(){
 		yield return new WaitForSeconds(sec);
 
 		frigdePanel.SetActive(true);
-		canServeWater = true;
+//		canServeWater = true;
 
 	}
 
@@ -110,7 +149,8 @@ public void ChangeSprite(){
 
 	public void FillBowlWater() {
 
-		if(bowl.playerBowl.activeSelf && canServeWater) {
+		if(bowl.playerBowl.activeSelf && canServeWater 
+			&& bowl.playerBowl.GetComponent<SpriteRenderer>().sprite == player.bowlEmpty) {
 
 			waterSound.Play();
 
@@ -124,6 +164,7 @@ public void ChangeSprite(){
 		} else {
 
 			cannotSound.Play();
+			waterShine.GetComponent<Image>().sprite = spriteWaterCannot;
 
 		}
 	}

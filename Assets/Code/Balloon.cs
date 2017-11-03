@@ -11,7 +11,7 @@ public class Balloon : MonoBehaviour {
 	public GameObject shineFloorTwo, shineFloorFive, shineFloorSeven, playerBalloon;
 
 	public bool canTakeIt;
-	public Sprite balloon;
+	public Sprite balloon, spriteShine, spriteCannot;
 
 	public GameObject balloonFloorTwo, balloonFloorFive, balloonFloorSeven;
 
@@ -199,12 +199,16 @@ public class Balloon : MonoBehaviour {
 		case MouseOverType.FloorTwo:
 
 			if(Input.GetMouseButtonDown(0) && bowl.playerBowl.activeSelf ) {
-
+				
+				shineFloorTwo.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+				shineFloorFive.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+				shineFloorSeven.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
 
 			} else if(Input.GetMouseButtonDown(0) && !canTakeIt 
 				&& balloonFloorTwo.GetComponent<SpriteRenderer>().color == alphaFullColor) {
-				
+
+				shineFloorTwo.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
 
 			} else if(Input.GetMouseButtonDown(0) && canTakeIt) {
@@ -238,6 +242,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			}else if(Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonSeven") {
 
@@ -255,6 +262,9 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
 
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonFive") {
@@ -275,6 +285,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonTwo") {
 
@@ -294,10 +307,24 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonFive") {
+				
+				shineFloorFive.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
+
 			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonSeven") {
+				
+				shineFloorSeven.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
+
+			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonTwo") {
+
+				shineFloorTwo.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+				cannotSound.Play();
+
 			}
 
 			break;
@@ -306,11 +333,15 @@ public class Balloon : MonoBehaviour {
 
 			if(Input.GetMouseButtonDown(0) && bowl.playerBowl.activeSelf ) {
 
+				shineFloorTwo.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+				shineFloorFive.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+				shineFloorSeven.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
 
 			} else if(Input.GetMouseButtonDown(0) && !canTakeIt 
 				&& balloonFloorFive.GetComponent<SpriteRenderer>().color == alphaFullColor) {
-				
+
+				shineFloorFive.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
 
 			} else if(Input.GetMouseButtonDown(0) && canTakeIt) {
@@ -344,6 +375,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			}else if(Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonSeven") {
 
@@ -360,6 +394,9 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
 
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonFive") {
@@ -380,6 +417,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonTwo") {
 
@@ -397,11 +437,27 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonSeven") {
+				
+				shineFloorSeven.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
+
 			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonTwo") {
+				
+				shineFloorTwo.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
+
+			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonFive") {
+
+				shineFloorFive.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+				cannotSound.Play();
+
 			}
+
 
 			break;
 		
@@ -409,11 +465,15 @@ public class Balloon : MonoBehaviour {
 
 			if(Input.GetMouseButtonDown(0) && bowl.playerBowl.activeSelf ) {
 
+				shineFloorTwo.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+				shineFloorFive.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+				shineFloorSeven.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
 
 			} else if(Input.GetMouseButtonDown(0) && !canTakeIt 
 				&& balloonFloorSeven.GetComponent<SpriteRenderer>().color == alphaFullColor) {
 
+				shineFloorSeven.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
 
 			}else if(Input.GetMouseButtonDown(0) && canTakeIt) {
@@ -438,6 +498,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			}else if(Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonSeven") {
 
@@ -455,6 +518,9 @@ public class Balloon : MonoBehaviour {
 				juice.lvlNumber--;
 
 				player.actions++;
+
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
 
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonFive") {
@@ -475,6 +541,9 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			} else if (Input.GetMouseButtonDown(0) 
 				&& currentState == BallonState.Picked && gameObject.tag == "BalloonTwo") {
 
@@ -494,10 +563,24 @@ public class Balloon : MonoBehaviour {
 
 				player.actions++;
 
+				if (juice.lvlNumber < 1)
+					StartCoroutine(player.GameOver());
+
 			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonFive") {
+				
+				shineFloorFive.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
+
 			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonTwo") {
+				
+				shineFloorTwo.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 				cannotSound.Play();
+
+			} else if (Input.GetMouseButtonDown(0) && !canTakeIt && gameObject.tag == "BalloonSeven") {
+				
+				shineFloorSeven.GetComponent<SpriteRenderer>().sprite = spriteCannot;
+				cannotSound.Play();
+
 			}
 
 			break;
@@ -508,9 +591,15 @@ public class Balloon : MonoBehaviour {
 		}
 	}
 
-	void OnMouseExit(){
+	void OnMouseExit() {
+		
 		shineFloorSeven.SetActive(false);
 		shineFloorFive.SetActive(false);
 		shineFloorTwo.SetActive(false);
+
+		shineFloorTwo.GetComponent<SpriteRenderer>().sprite = spriteShine;
+		shineFloorFive.GetComponent<SpriteRenderer>().sprite = spriteShine;
+		shineFloorSeven.GetComponent<SpriteRenderer>().sprite = spriteShine;
+
 	}
 }

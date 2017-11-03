@@ -21,9 +21,11 @@ public class Dog : MonoBehaviour {
 	public bool surprisedPlayed = false;
 	public bool yappingPlayed = false;
 
+	[HideInInspector]
+	public SpriteRenderer spriteRender;
+
 	private Bowl bowl;
 	private Balloon balloon;
-	private SpriteRenderer spriteRender;
 	private Keys keys;
 
 	// Use this for initialization
@@ -247,6 +249,7 @@ public class Dog : MonoBehaviour {
 
 		} else if (transform.position.x == target.x && keys.spriteRender.color == keys.alphaZeroColor) {
 			spriteRender.sprite = dogSurprise;
+			dogCount = 0;
 
 			if(!surprisedPlayed) {
 				surprisedSound.PlayOneShot(surprised);

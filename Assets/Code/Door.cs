@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Door : MonoBehaviour {
 
-	public Sprite doorClosed, doorOpened;
+	public Sprite doorClosed, doorOpened, spriteShine, spriteCannot;
 	public GameObject doorShine, winnerPanel, winnerSound; 
 	public bool canOpenIt;
 	public AudioSource cannotSound, openDoorSound;
@@ -50,6 +50,8 @@ public class Door : MonoBehaviour {
 	}
 
 	void OnMouseExit() {
+
+		doorShine.GetComponent<SpriteRenderer>().sprite = spriteShine;
 		doorShine.SetActive(false);
 	}
 
@@ -60,6 +62,7 @@ public class Door : MonoBehaviour {
 
 		if(Input.GetMouseButtonDown(0) && !canOpenIt) {
 
+			doorShine.GetComponent<SpriteRenderer>().sprite = spriteCannot;
 			cannotSound.Play();
 			
 		} else if(Input.GetMouseButtonDown(0) && canOpenIt) {
