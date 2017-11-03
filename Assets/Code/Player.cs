@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour {
 	public Juice juice;
 	public Sprite bowlEmpty, bowlFood, bowlWater;
 	public SpriteRenderer bowlSpriteRender;
-	public GameObject playerBalloon, playerKeys, gameOverPanel;
+	public GameObject playerBalloon, playerKeys, playerMail, playerToy, gameOverPanel;
 	public int actions = 0;
 	public Text gameOverActions, winnerActions;
 	public bool isMoving;
@@ -39,11 +40,28 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		spriteRender = GetComponent<SpriteRenderer>();
-		dogFood = GameObject.Find("Dog Food").GetComponent<DogFood>();
-		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
-		dog = GameObject.Find("Doki").GetComponent<Dog>();
-		txtActions = GameObject.Find("Text Actions").GetComponent<Text>();
+		Scene currentScene = SceneManager.GetActiveScene();
+
+		string sceneName = currentScene.name;
+
+		if (sceneName == "Kitchen") {
+
+			spriteRender = GetComponent<SpriteRenderer>();
+			dogFood = GameObject.Find("Dog Food").GetComponent<DogFood>();
+			bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
+			dog = GameObject.Find("Doki").GetComponent<Dog>();
+			txtActions = GameObject.Find("Text Actions").GetComponent<Text>();
+
+			
+		} else if (sceneName == "LivinRoom") {
+
+			spriteRender = GetComponent<SpriteRenderer>();
+			dog = GameObject.Find("Doki").GetComponent<Dog>();
+			txtActions = GameObject.Find("Text Actions").GetComponent<Text>();
+			
+		}
+
+
 
 		if(spriteRender.sprite == null || currentState == PlayerState.Happy) {
 			spriteRender.sprite = okiHappy;
@@ -59,6 +77,9 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		Scene currentScene = SceneManager.GetActiveScene();
+		string sceneName = currentScene.name;
 
 		switch(juice.lvlNumber) {
 
@@ -132,10 +153,14 @@ public class Player : MonoBehaviour {
 		gameOverActions.text = (actions.ToString());
 		winnerActions.text = (actions.ToString());
 
-		if(bowl.currentState == Bowl.BowlState.Empty) {
-			bowlSpriteRender.sprite = bowlEmpty;
-		}
+		if(sceneName == "Kitchen") {
+			
+			if(bowl.currentState == Bowl.BowlState.Empty) {
+				bowlSpriteRender.sprite = bowlEmpty;
+			}
 
+		}
+			
 		currentActions = actions;
 
 	}

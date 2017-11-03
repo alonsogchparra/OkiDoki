@@ -49,7 +49,7 @@ public class Floor : MonoBehaviour {
 		}
 
 		if(dog.currentState == Dog.DogState.Walking 
-			|| dog.currentState == Dog.DogState.FindingBallon 
+			|| dog.currentState == Dog.DogState.Finding 
 			|| player.playerBalloon.activeSelf ) {
 
 			player.currentPosition = player.transform.position;
@@ -88,7 +88,7 @@ public class Floor : MonoBehaviour {
 			canClickFloor = true;
 
 		} else if(player.currentPosition != transform.position 
-			|| player.currentPosition != player.transform.position) {
+			|| player.currentPosition != player.transform.position || dog.currentState == Dog.DogState.Finding) {
 
 			canClickFloor = false;
 		}
@@ -118,6 +118,8 @@ public class Floor : MonoBehaviour {
 
 				juice.lvlNumber--;
 
+				player.GetComponent<Animator>().SetTrigger("Walk Trigger");
+
 				if (juice.lvlNumber < 1)
 					StartCoroutine(player.GameOver());
 
@@ -137,8 +139,12 @@ public class Floor : MonoBehaviour {
 					
 				player.currentPosition = transform.position;
 
-				if(dog.currentState == Dog.DogState.Eating || dog.currentState == Dog.DogState.HasBalloon) {
+				if(dog.currentState == Dog.DogState.Eating 
+					|| dog.currentState == Dog.DogState.HasBalloon 
+					|| dog.currentState == Dog.DogState.WatchTV || dog.currentState == Dog.DogState.HasToy) {
+
 					dog.dogCount++;
+
 				}
 
 

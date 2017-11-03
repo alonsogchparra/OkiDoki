@@ -1,25 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Dog : MonoBehaviour {
 
-	public enum DogState { Happy, HasKeys, HasBalloon, Surprise, Eating, Drinking, Walking, FindingBallon }
+	public enum DogState { Happy, HasKeys, HasBalloon, Surprise, Eating,
+		Drinking, Walking, Finding, HasMail, WatchTV, HasToy, Sleepy }
 
-	public DogState currentState = DogState.HasKeys;
+	public DogState currentState;
 
-	public Sprite dogHappy, dogHasKeys, dogHasBalloon, dogSurprise, dogEating, dogWalking, dogFindingBallon;
+	public Sprite dogHappy, dogHasKeys, dogHasBalloon, dogSurprise, dogEating,
+	dogWalking, dogFindingBallon, dogHasMail, dogHasToy, dogWatchesTV, dogSleeping;
 
 	public bool _isFacingRight;
 	public float speed = 2.0f;
 
 	public int dogCount = 0;
 
-	public AudioSource yappingSound, eatingSound, surprisedSound;
+	public AudioSource yappingSound, eatingSound, surprisedSound, sleepySound;
 
 	public AudioClip eating, surprised, yapping;
 
 	public bool surprisedPlayed = false;
 	public bool yappingPlayed = false;
+
+	public bool mailCatched = false;
+	public bool isDoorOpen = false;
+
 
 	[HideInInspector]
 	public SpriteRenderer spriteRender;
@@ -27,65 +34,197 @@ public class Dog : MonoBehaviour {
 	private Bowl bowl;
 	private Balloon balloon;
 	private Keys keys;
+	private Televisor tv;
+	private Mail mail;
+	private Toy toy;
+	private Player player;
+	private Door door;
+
 
 	// Use this for initialization
 	void Start () {
 
-		spriteRender = GetComponent<SpriteRenderer>();
-		bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
-		balloon = GameObject.Find("Balloon Floor Seven").GetComponent<Balloon>();
-		keys = GameObject.Find("Keys").GetComponent<Keys>();
+		Scene currentScene = SceneManager.GetActiveScene();
+		string sceneName = currentScene.name;
+
+		if (sceneName == "Kitchen") {
+
+			currentState = DogState.HasKeys;
+
+			spriteRender = GetComponent<SpriteRenderer>();
+			bowl = GameObject.Find("Bowl").GetComponent<Bowl>();
+			balloon = GameObject.Find("Balloon Floor Seven").GetComponent<Balloon>();
+			keys = GameObject.Find("Keys").GetComponent<Keys>();
+
+			if(spriteRender == null || currentState == DogState.HasKeys)
+				spriteRender.sprite = dogHasKeys;
+		
+		} else if (sceneName == "LivinRoom") {
+
+			currentState = DogState.HasMail;
+
+			spriteRender = GetComponent<SpriteRenderer>();
+			tv = GameObject.Find("TV").GetComponent<Televisor>();
+			mail = GameObject.Find("Mail").GetComponent<Mail>();
+			toy = GameObject.Find("Dog Toy").GetComponent<Toy>();
+			player = GameObject.Find("Oki").GetComponent<Player>();
+			door = GameObject.Find("Door").GetComponent<Door>();
+
+			if(spriteRender == null || currentState == DogState.HasMail)
+				spriteRender.sprite = dogHasMail;
+
+		}
+
+
 
 		_isFacingRight = transform.localScale.x > 0;
 
-		if(spriteRender == null || currentState == DogState.HasKeys)
-			spriteRender.sprite = dogHasKeys;
+//		if(spriteRender == null || currentState == DogState.HasKeys)
+//			spriteRender.sprite = dogHasKeys;
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		if(dogCount == 2 && currentState != DogState.Eating) {
-			
-			balloon.currentState = Balloon.BallonState.Normal;
-			balloon.balloonFloorFive.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
-			balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
+		Scene currentScene = SceneManager.GetActiveScene();
+		string sceneName = currentScene.name;
 
-			BalloonToKeys(keys.transform.position);
+		switch(sceneName) {
 
-		} else if(dogCount == 3) {
-			bowl.currentState = Bowl.BowlState.Empty;
+		case "Kitchen":
+
+			if(dogCount == 2 && currentState != DogState.Eating) {
+
+				balloon.currentState = Balloon.BallonState.Normal;
+				balloon.balloonFloorFive.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
+				balloon.balloonFloorTwo.GetComponent<Balloon>().currentState = Balloon.BallonState.Normal;
+
+				BalloonToKeys(keys.transform.position);
+
+			} else if(dogCount == 3) {
+				bowl.currentState = Bowl.BowlState.Empty;
+
+			}
+
+
+			if(bowl.currentState == Bowl.BowlState.Food || bowl.currentState == Bowl.BowlState.Water) {
+				DogMoveToBowl();
+
+			} else if (bowl.currentState == Bowl.BowlState.Empty && dogCount == 3) {
+				DogMoveToKeys();
+
+			} else if(balloon.currentState == Balloon.BallonState.Wanted 
+				&& balloon.balloonFloorSeven.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
+
+				currentState = DogState.Finding;
+				DogMoveToBalloon(balloon.balloonFloorSeven.transform.position);
+
+
+			} else if(balloon.balloonFloorFive.GetComponent<Balloon>().currentState == Balloon.BallonState.Wanted 
+				&& balloon.balloonFloorFive.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
+
+				currentState = DogState.Finding;
+				DogMoveToBalloon(balloon.balloonFloorFive.transform.position);
+
+			} else if (balloon.balloonFloorTwo.GetComponent<Balloon>().currentState == Balloon.BallonState.Wanted 
+				&& balloon.balloonFloorTwo.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
+
+				currentState = DogState.Finding;
+				DogMoveToBalloon(balloon.balloonFloorTwo.transform.position);
+
+			}
+
+			break;
+
+			case "LivinRoom":
+
+			if(transform.position.x == mail.transform.position.x) {
+				mailCatched = true;
+			}
+
+			if(currentState != DogState.Sleepy 
+				&& GameObject.Find("Oki").transform.position.x == GameObject.Find("Floor 1").transform.position.x 
+				&& !mailCatched) {
+
+				currentState = DogState.Finding;
+				DogBackToMail(mail.transform.position);
+
+				toy.currentState = Toy.ToyState.Normal;
+				toy.floorSix.GetComponent<Toy>().currentState = Toy.ToyState.Normal;
+				toy.couchOne.GetComponent<Toy>().currentState = Toy.ToyState.Normal;
+				toy.couchTwo.GetComponent<Toy>().currentState = Toy.ToyState.Normal;
+				toy.couchThree.GetComponent<Toy>().currentState = Toy.ToyState.Normal;
+
+			}
+				
+
+				if (toy.currentState == Toy.ToyState.Wanted 
+				&& toy.floorSix.GetComponent<SpriteRenderer>().color == toy.alphaFullColor) {
+
+				currentState = DogState.Finding;
+				GoesToDogToy(toy.floorSix.transform.position);
+
+			} else if (toy.couchOne.GetComponent<Toy>().currentState == Toy.ToyState.Wanted 
+				&& toy.couchOne.GetComponent<SpriteRenderer>().color == toy.alphaFullColor) {
+
+				currentState = DogState.Finding;
+				GoesToDogToy(toy.couchOne.transform.position);
+
+			} else if (toy.couchTwo.GetComponent<Toy>().currentState == Toy.ToyState.Wanted 
+				&& toy.couchTwo.GetComponent<SpriteRenderer>().color == toy.alphaFullColor) {
+
+				currentState = DogState.Finding;
+				GoesToDogToy(toy.couchTwo.transform.position);
+
+			} else if (toy.couchThree.GetComponent<Toy>().currentState == Toy.ToyState.Wanted 
+				&& toy.couchThree.GetComponent<SpriteRenderer>().color == toy.alphaFullColor) {
+
+				currentState = DogState.Finding;
+				GoesToDogToy(toy.couchThree.transform.position);
+
+			} 
+
+
+			if (tv.spriteRender.sprite == tv.tvOn 
+				&& toy.couchOne.GetComponent<Toy>().currentState != Toy.ToyState.Wanted) {
+				
+				currentState = DogState.Finding;
+				DogMoveToTV(tv.transform.position);
+
+			} else if (tv.spriteRender.sprite == tv.tvOn 
+				&& toy.couchTwo.GetComponent<Toy>().currentState != Toy.ToyState.Wanted) {
+
+				currentState = DogState.Finding;
+				DogMoveToTV(tv.transform.position);
+
+			} else if (tv.spriteRender.sprite == tv.tvOn 
+				&& toy.couchThree.GetComponent<Toy>().currentState != Toy.ToyState.Wanted) {
+
+				currentState = DogState.Finding;
+				DogMoveToTV(tv.transform.position);
+
+			} else if (tv.spriteRender.sprite == tv.tvOn 
+				&& toy.floorSix.GetComponent<Toy>().currentState != Toy.ToyState.Wanted) {
+
+				currentState = DogState.Finding;
+				DogMoveToTV(tv.transform.position);
+
+			} 
+				
+
+			if(isDoorOpen) {
+				
+				currentState = DogState.Finding;
+				DogGoesOut(door.transform.position);
+
+			}
+
+			break;
 
 		}
 
 
-		if(bowl.currentState == Bowl.BowlState.Food || bowl.currentState == Bowl.BowlState.Water) {
-			DogMoveToBowl();
-
-		} else if (bowl.currentState == Bowl.BowlState.Empty && dogCount == 3) {
-			DogMoveToKeys();
-		
-		} else if(balloon.currentState == Balloon.BallonState.Wanted 
-			&& balloon.balloonFloorSeven.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
-
-			currentState = DogState.FindingBallon;
-			DogMoveToBalloon(balloon.balloonFloorSeven.transform.position);
-
-
-		} else if(balloon.balloonFloorFive.GetComponent<Balloon>().currentState == Balloon.BallonState.Wanted 
-			&& balloon.balloonFloorFive.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
-
-			currentState = DogState.FindingBallon;
-			DogMoveToBalloon(balloon.balloonFloorFive.transform.position);
-
-		} else if (balloon.balloonFloorTwo.GetComponent<Balloon>().currentState == Balloon.BallonState.Wanted 
-			&& balloon.balloonFloorTwo.GetComponent<SpriteRenderer>().color == balloon.alphaFullColor) {
-
-			currentState = DogState.FindingBallon;
-			DogMoveToBalloon(balloon.balloonFloorTwo.transform.position);
-
-		}
 	}
 
 
@@ -129,7 +268,7 @@ public class Dog : MonoBehaviour {
 
 	void DogMoveToBalloon(Vector3 target) {
 
-		if(currentState == DogState.FindingBallon) {
+		if(currentState == DogState.Finding) {
 			spriteRender.sprite = dogFindingBallon;
 
 			if(!yappingPlayed) {
@@ -267,21 +406,198 @@ public class Dog : MonoBehaviour {
 
 	}
 
+	void DogMoveToTV(Vector3 target) {
+
+		if(currentState == DogState.Finding) {
+			
+			spriteRender.sprite = dogFindingBallon;
+
+			if(!yappingPlayed) {
+				yappingSound.PlayOneShot(yapping);
+				yappingPlayed = true;
+			}	
+
+		}
+			
+
+		if(transform.position.x == toy.floorSix.transform.position.x) {
+			toy.floorSix.GetComponent<SpriteRenderer>().color = toy.alphaFullColor;
+
+		} else if(transform.position.x == toy.couchOne.transform.position.x) {
+			toy.couchOne.GetComponent<SpriteRenderer>().color = toy.alphaFullColor;
+
+		} else if(transform.position.x == toy.couchTwo.transform.position.x) {
+			toy.couchTwo.GetComponent<SpriteRenderer>().color = toy.alphaFullColor;
+
+		} else if(transform.position.x == toy.couchThree.transform.position.x) {
+			toy.couchThree.GetComponent<SpriteRenderer>().color = toy.alphaFullColor;
+		}
+
+			
+		transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
+
+		transform.localScale = new Vector3(1f, 1f, 1f);
+		spriteRender.sortingOrder = 30;
+
+		if(transform.position.x == target.x) {
+			
+			spriteRender.sprite = dogWatchesTV;
+			currentState = DogState.WatchTV;
+			mailCatched = false;
+
+		}
+
+	}
+
+
+	void DogBackToMail(Vector3 start) {
+
+		yappingSound.Play();
+
+		if(currentState == DogState.Finding) {
+
+			spriteRender.sprite = dogFindingBallon;
+
+			if(!yappingPlayed) {
+				yappingSound.PlayOneShot(yapping);
+				yappingPlayed = true;
+			}
+
+		}
+
+		if(transform.position.x == tv.transform.position.x) {
+			tv.spriteRender.sprite = tv.tvOff;
+		}
+
+
+		if(transform.position.x == toy.floorSix.transform.position.x) {
+			toy.floorSix.GetComponent<SpriteRenderer>().color = toy.alphaFullColor;
+
+		} else if(transform.position.x == toy.couchOne.transform.position.x) {
+			toy.couchOne.GetComponent<SpriteRenderer>().color = toy.alphaFullColor;
+
+		} else if(transform.position.x == toy.couchTwo.transform.position.x) {
+			toy.couchTwo.GetComponent<SpriteRenderer>().color = toy.alphaFullColor;
+
+		} else if(transform.position.x == toy.couchThree.transform.position.x) {
+			toy.couchThree.GetComponent<SpriteRenderer>().color = toy.alphaFullColor;
+		}
+
+		transform.position = Vector3.MoveTowards(transform.position, start, Time.deltaTime * speed);
+
+		transform.localScale = new Vector3(-1f, 1f, 1f);
+		spriteRender.sortingOrder = 50;
+
+		if(transform.position.x == mail.transform.position.x
+			&& mail.spriteRender.color == mail.alphaFullColor) {
+
+			spriteRender.sprite = dogHasMail;
+			currentState = DogState.HasMail;
+			dogCount = 0;
+			yappingPlayed = false;
+
+		} else if(transform.position.x == mail.transform.position.x
+			&& mail.spriteRender.color == mail.alphaZeroColor) {
+
+			spriteRender.sprite = dogSurprise;
+
+			if(!surprisedPlayed) {
+				surprisedSound.PlayOneShot(surprised);
+				surprisedPlayed = true;
+			}
+		} 
+	}
+
+	void GoesToDogToy(Vector3 target) {
+			
+		if(currentState == DogState.Finding) {
+			
+			spriteRender.sprite = dogFindingBallon;
+
+			if(!yappingPlayed) {
+				yappingSound.PlayOneShot(yapping);
+				yappingPlayed = true;
+			}
+
+		}
+			
+		transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
+
+		transform.localScale = new Vector3(1f, 1f, 1f);
+		spriteRender.sortingOrder = 30;
+
+		if(transform.position.x == target.x) {
+
+			spriteRender.sprite = dogHasToy;
+			currentState = DogState.HasToy;
+			mailCatched = false;
+			yappingPlayed = false;
+
+		}
+	}
+
+
+	public void SendDogToSleep() {
+
+		currentState = DogState.Sleepy;
+		spriteRender.sprite = dogSleeping;
+		sleepySound.Play();
+
+	}
+
+	public void DogWokeUp() {
+		currentState = DogState.HasToy;
+		spriteRender.sprite = dogHasToy;
+		sleepySound.Stop();
+	}
+
+	public void DogGoesOut(Vector3 target) {
+
+		if(currentState == DogState.Finding) {
+
+			spriteRender.sprite = dogFindingBallon;
+
+			if(!yappingPlayed) {
+				yappingSound.PlayOneShot(yapping);
+				yappingPlayed = true;
+			}	
+
+		}
+
+		transform.position = Vector3.MoveTowards(
+			transform.position, new Vector3((target.x + 1f), target.y, target.z), Time.deltaTime * speed);
+
+		transform.localScale = new Vector3(-1f, 1f, 1f);
+		spriteRender.sortingOrder = 30;
+
+
+	}
+
+
 	void OnTriggerEnter2D(Collider2D other) {
 
-		var tgt_bowl = bowl.transform.position;
-		var tgt_keys = keys.transform.position;
+		Scene currentScene = SceneManager.GetActiveScene();
+	 	string sceneName = currentScene.name;
 
-		if(other.tag == "Bowl") {
-			
-			AudioSource.PlayClipAtPoint(eating, tgt_bowl);
+		if (sceneName == "Kitchen") {
 
-		} else if(other.tag == "Keys") {
+			var tgt_bowl = bowl.transform.position;
+			var tgt_keys = keys.transform.position;
 
-			if(currentState == DogState.Surprise) {
-				AudioSource.PlayClipAtPoint(surprised, tgt_keys);
+			if(other.tag == "Bowl") {
+
+				AudioSource.PlayClipAtPoint(eating, tgt_bowl);
+
+			} else if(other.tag == "Keys") {
+
+				if(currentState == DogState.Surprise) {
+					AudioSource.PlayClipAtPoint(surprised, tgt_keys);
+				}
 			}
+
 		}
+
+
 	}
 
 }
