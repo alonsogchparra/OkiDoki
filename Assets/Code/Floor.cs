@@ -118,7 +118,7 @@ public class Floor : MonoBehaviour {
 
 				juice.lvlNumber--;
 
-				player.GetComponent<Animator>().SetTrigger("Walk Trigger");
+//				player.GetComponent<Animator>().SetTrigger("Walk Trigger");
 
 				if (juice.lvlNumber < 1)
 					StartCoroutine(player.GameOver());
